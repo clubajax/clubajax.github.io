@@ -1,0 +1,28 @@
+{
+  "name": "clubajax.github.io",
+  "homepage": "https://github.com/clubajax/clubajax.github.io",
+  "authors": [
+    "Mike Wilcox <anm9tr@gmail.com>"
+  ],
+  "description": "Club AJAX Demos",
+  "main": "index.html",
+  "keywords": [
+    "open",
+    "source",
+    "JavaScript",
+    "libraries"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mouse": "clubajax/mouse",
+    "dom": "clubajax/dom#^1.4.1",
+    "on": "clubajax/on#^1.7.8"
+  }
+}
