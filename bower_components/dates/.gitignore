@@ -1,0 +1,26 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# project-specific
+dist
+
+# general dependencies
+node_modules
+bower_components
+coverage
+
+# misc
+.sass-cache
+connect.lock
+libpeerconnection.log
+npm-debug.log
+testem.log
+*.yml
+*.iml
+.idea
+.idea
+.idea/UI-X.iml
+*.sublime-*
+.DS_Store
+
+server/uploaded
+server/data/uploads.json

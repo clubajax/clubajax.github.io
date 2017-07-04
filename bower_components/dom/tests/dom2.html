@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test dom</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.5.3/mocha.css">
+    <script src="../src/dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.5.3/mocha.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.min.js"></script>
+    <style>
+        body{
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        #option-div{
+            position: absolute;
+            left: -10000px;
+        }
+    </style>
+</head>
+<body>
+    <h1>dom test</h1>
+    <div id="option-div" class="foo" value="bar" selected="a" disabled="true" is-prop>
+        <option value="a">A</option>
+        <option value="b" selected>B</option>
+        <option value="c">C</option>
+    </div>
+
+    <div id="children-with-whitespace">
+        <span>a</span>
+        <span>c</span>
+        <span>d</span>
+    </div>
+
+    <div id="mocha"></div>
+    <script>
+
+        mocha.setup('tdd');
+
+        var
+            body = document.body,
+            expect = chai.expect,
+            dom = window.dom;
+
+        suite('dom', function() {
+			suite('attributes', function() {
+				test('it should add a className', function () {
+					var node1 = dom('div', {class: 'foo'});
+					var node2 = dom('div', {className: 'bar'});
+					expect(node1.className).to.equal('foo');
+					expect(node2.className).to.equal('bar');
+				});
+
+				test('it should add an ID', function () {
+					var node = dom('div', {id: 'foo'});
+					expect(node.id).to.equal('foo');
+				});
+
+				test('it should set style', function () {
+					var node = dom('div', {style:{opacity:0.5, display:'inline-block'}});
+					expect(node.style.opacity).to.equal('0.5');
+					expect(node.style.display).to.equal('inline-block');
+				});
+
+				test('it should set attributes', function () {
+					var node = dom('button', {tabindex: 0, disabled: true});
+					expect(node.getAttribute('tabindex')).to.equal('0');
+					expect(node.getAttribute('disabled')).to.equal('true');
+				});
+
+				test('it should set attributes (back compat)', function () {
+					var node = dom('button', {attr:{tabindex: 0, disabled: true}});
+					console.log(node);
+					expect(node.getAttribute('tabindex')).to.equal('0');
+					expect(node.getAttribute('disabled')).to.equal('true');
+				});
+
+			});
+
+			suite('child nodes', function() {
+				test('it should create a node with innerHTML', function () {
+					var node;
+
+					node = dom('div', { html: '<span>span</span>' });
+					expect(dom.queryAll(node, 'span').length).to.equal(1);
+					dom.destroy(node);
+
+					node = dom('div', { innerHTML: '<span>span</span>' });
+					expect(dom.queryAll(node, 'span').length).to.equal(1);
+					dom.destroy(node);
+				});
+
+				test('it should create a node with text', function () {
+					var node;
+
+					node = dom('div', { html: 'text' });
+					expect(node.textContent).to.equal('text');
+					dom.destroy(node);
+
+					node = dom('div', { text: 'text' });
+					expect(node.textContent).to.equal('text');
+					dom.destroy(node);
+				});
+
+				test('it should create a node with a child node', function () {
+					var node;
+
+					node = dom('div', { html: dom('span') });
+					expect(dom.queryAll(node, 'span').length).to.equal(1);
+					dom.destroy(node);
+				});
+
+				test('it should create a node with children', function () {
+					var node;
+
+					node = dom('div', { html: [dom('span'), dom('span'), dom('span')] });
+					expect(dom.queryAll(node, 'span').length).to.equal(3);
+					dom.destroy(node);
+				});
+
+				test('it should create a node with children using mixed values', function () {
+					var node;
+
+					node = dom('div', { html: [dom('span'), '<span></span>'] });
+					expect(dom.queryAll(node, 'span').length).to.equal(2);
+					dom.destroy(node);
+				});
+
+				test('it should create an object from dom', function () {
+					var
+						node = dom.byId('option-div'),
+						o = dom.fromDom(node);
+					console.log('', node);
+					console.log('', o);
+					expect(typeof o).to.equal('object');
+					expect(o.id).to.equal('option-div');
+					expect(o.class).to.equal('foo');
+					expect(o.value).to.equal('bar');
+					expect(o.selected).to.equal('a');
+					expect(o.disabled).to.equal(true);
+					expect(o['is-prop']).to.equal(true);
+					expect(o.children.length).to.equal(3);
+
+					expect(o.children[0].value).to.equal('a');
+					expect(o.children[0].text).to.equal('A');
+					expect(o.children[0].selected).to.equal(undefined);
+
+					expect(o.children[1].value).to.equal('b');
+					expect(o.children[1].text).to.equal('B');
+					expect(o.children[1].selected).to.equal(true);
+
+					expect(o.children[2].value).to.equal('c');
+					expect(o.children[2].text).to.equal('C');
+					expect(o.children[2].selected).to.equal(undefined);
+
+				});
+
+				test('it toggles the classList (IE workaround)', function () {
+					var node = dom('div');
+					dom.classList.toggle(node, 'foo', false);
+					expect(node.className).to.equal('');
+					dom.classList.toggle(node, 'foo', true);
+					expect(node.className).to.equal('foo');
+					dom.classList.toggle(node, 'foo', false);
+					expect(node.className).to.equal('');
+				});
+
+				test('it should insertAfter, between nodes', function () {
+
+					var
+						parent = dom('div', {}, document.body),
+						sibling = dom('span', { html: 'a' }, parent),
+						end = dom('span', { html: 'c' }, parent),
+						insertNode = dom('span', { html: 'b' });
+
+					dom.insertAfter(sibling, insertNode);
+
+					expect(parent.textContent).to.equal('abc');
+					dom.destroy(parent);
+				});
+
+				test('it should insertAfter, at the end', function () {
+
+					var
+						parent = dom('div', {}, document.body),
+						sibling = dom('span', { html: 'a' }, parent),
+						end = dom('span', { html: 'b' }, parent),
+						insertNode = dom('span', { html: 'c' });
+
+					dom.insertAfter(end, insertNode);
+
+					expect(parent.textContent).to.equal('abc');
+					dom.destroy(parent);
+				});
+
+				test('it should insertAfter, ignoring whitespace', function () {
+
+					var
+						txt,
+						parent = dom.byId('children-with-whitespace'),
+						sibling = dom.query('span'),
+						insertNode = dom('span', { html: 'b' });
+
+					dom.insertAfter(sibling, insertNode);
+
+					txt = parent.textContent.trim().replace(/\s/g, '');
+					expect(txt).to.equal('abcd');
+					dom.destroy(parent);
+				});
+			});
+
+        });
+
+        suite('temp', function () {
+
+
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>

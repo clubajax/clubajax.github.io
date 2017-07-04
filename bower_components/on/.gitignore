@@ -5,6 +5,7 @@
 /tmp
 
 /node_modules
+/bower_components
 
 # misc
 /.sass-cache
@@ -18,5 +19,6 @@ testem.log
 .idea
 /.idea
 .idea/UI-X.iml
+*.sublime-*
 *.lnk
 ebuild.bat

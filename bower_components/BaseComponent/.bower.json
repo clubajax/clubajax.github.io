@@ -1,0 +1,14 @@
+{
+  "name": "BaseComponent",
+  "homepage": "https://github.com/clubajax/BaseComponent",
+  "version": "1.3.0",
+  "_release": "1.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.3.0",
+    "commit": "e8f7ff184426b808c3326673d3e8808e6911ac02"
+  },
+  "_source": "https://github.com/clubajax/BaseComponent.git",
+  "_target": "*",
+  "_originalSource": "clubajax/BaseComponent"
+}
