@@ -21,8 +21,9 @@
     "tests"
   ],
   "dependencies": {
-    "mouse": "clubajax/mouse",
-    "dom": "clubajax/dom#^1.4.1",
-    "on": "clubajax/on#^1.7.8"
+    "mouse": "clubajax/mouse#0.6.0",
+    "dom": "clubajax/dom#2.0.0",
+    "on": "clubajax/on#2.0.0",
+		"date-picker":"clubajax/date-picker#v0.7.2"
   }
 }
