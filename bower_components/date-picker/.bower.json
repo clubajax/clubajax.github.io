@@ -1,6 +1,6 @@
 {
   "name": "date-picker",
-  "version": "0.7.2",
+  "version": "0.9.1",
   "description": "Calendar custom-element",
   "main": "dist/date-picker.js",
   "authors": [
@@ -28,13 +28,13 @@
     "on": "clubajax/on#v2.0.0",
     "dates": "clubajax/dates"
   },
-  "_release": "0.7.2",
+  "_release": "0.9.1",
   "_resolution": {
     "type": "version",
-    "tag": "v0.7.2",
-    "commit": "96057c52ab8924a9d14c5a871b3c17a598b5dca9"
+    "tag": "v0.9.1",
+    "commit": "c48e976582bf0ec73415cb441a2192c40ea9055d"
   },
   "_source": "https://github.com/clubajax/date-picker.git",
-  "_target": "v0.7.2",
+  "_target": "v0.9.1",
   "_originalSource": "clubajax/date-picker"
 }

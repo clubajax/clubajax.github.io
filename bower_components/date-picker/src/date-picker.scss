@@ -1,21 +1,26 @@
-$calendar-brd: #ccc;
-$calendar-bg: white;
-$calendar-header: #eee;
-$calendar-header-hov: #d2f0ff;
-$calendar-header-nav: #0968d2;
-$calendar-off-txt: #999;
-$calendar-link: #0968d2;
-$calendar-today: #666; //selected day
-$calendar-today-txt: white;
+$brd: #ccc;
+$bg: white;
+$header: #eee;
+$header-hov: #d2f0ff;
+$header-nav: #0968d2;
+$link: #0968d2;
 
-$calendar-hov: #eee;
-$calendar-sel: #5dbae0;
-$calendar-sel-txt: white;
-$calendar-sel-hov: #57add1;
+$off-txt: #999;
+$today: #666; //selected day
+$today-txt: white;
+$dsbl: white;
+$dsbl-txt: #999;
+$dsbl-sel: #9dc8da;
+$hov: #eee;
+$sel: #5dbae0;
+$sel-txt: white;
+$sel-hov: #57add1;
 
+$range: #beecff;
+$range-select: #5dbae0;
 
-$calendar-range: #beecff;
-$calendar-range-select: #5dbae0;
+$warn-brd: #be4304;
+$warn-bk: #fffdd5;
 
 date-picker{
     display: inline-block;
@@ -23,9 +28,9 @@ date-picker{
     .calendar{
         border-radius: 4px;
         display: inline-block;
-        border: 1px solid $calendar-brd;
+        border: 1px solid $brd;
         padding: 3px;
-        background: $calendar-bg;
+        background: $bg;
     }
     .cal-container{
         width: 200px;
@@ -49,11 +54,11 @@ date-picker{
         right: 26px;
         line-height: 22px;
         &:hover{
-            background: $calendar-header-hov;
+            background: $header-hov;
         }
     }
     .day-of-week{
-        border-bottom: 1px solid $calendar-brd;
+        border-bottom: 1px solid $brd;
     }
     .cal-lft, .cal-rgt{
         cursor: pointer;
@@ -64,10 +69,10 @@ date-picker{
         &:before{
             position: absolute;
             content: '\25B6';
-            color: $calendar-header-nav;
+            color: $header-nav;
         }
         &:hover{
-            background:  $calendar-header-hov;
+            background:  $header-hov;
         }
     }
     .cal-lft{
@@ -88,7 +93,8 @@ date-picker{
     .cal-body{
         margin-top: 3px;
         height: 100%;
-        div{
+        div{ // .day
+            box-sizing: border-box;
             float: left;
             width: 14.285%;
             height: 14.285%; // 6 weeks + day header
@@ -97,39 +103,58 @@ date-picker{
             background: transparent;
             transition: background 300ms;
             &.off{
-                color: $calendar-off-txt;
+                color: $off-txt;
             }
             &.on, &.off{
                 cursor: pointer;
                 border-radius: 3px;
                 &:hover{
-                    background: $calendar-hov;
+                    background: $hov;
                 }
             }
             &.today{
-                background: $calendar-today;
-                color: $calendar-today-txt;
+                background: white;
+                color: $today;
+                border: 1px solid $today;
             }
-            &.ay-selected{
-                background: $calendar-sel;
-                color: $calendar-sel-txt;
+            &.selected{
+                background: $sel;
+                color: $sel-txt;
                 &:hover{
-                    background: $calendar-sel-hov;
+                    background: $sel-hov;
                 }
             }
-            &.ay-range.on{
-                background: $calendar-range;
+            &.range.on{
+                background: $range;
                 border-radius: 0;
             }
-            &.ay-range-first.on{
-                background: $calendar-range-select;
+            &.range-first.on{
+                background: $range-select;
                 color: white;
                 border-radius: 3px 0 0 3px;
             }
-            &.ay-range-second.on{
-                background: $calendar-range-select;
+            &.range-second.on{
+                background: $range-select;
                 color: white;
                 border-radius: 0 3px 3px 0;
+            }
+            &.disabled{
+                background: $dsbl;
+                color: $dsbl-txt;
+                cursor: default;
+                font-style: italic;
+                &.today{
+                    background: $today;
+                    color: $today-txt;
+                }
+                &.selected{
+                    background: $dsbl-sel;
+                    color: $dsbl-txt;
+                    &:hover{
+                        background: $dsbl-sel;
+                        color: $dsbl-txt;
+                    }
+                }
             }
         }
         &.year, &.decade {
@@ -140,7 +165,7 @@ date-picker{
                 line-height: 5;
                 border-radius: 3px;
                 &:hover {
-                    background: $calendar-hov;
+                    background: $hov;
                 }
             }
         }
@@ -149,7 +174,7 @@ date-picker{
         text-align: center;
         padding: 5px;
         a{
-            color: $calendar-link;
+            color: $link;
             text-decoration: none;
             &:hover{
                 text-decoration:underline;
@@ -169,6 +194,10 @@ date-picker{
 date-input, date-range-input{
     position: relative;
     //outline: none;
+    input{
+        border: 1px solid $brd;
+        transition: background-color 300ms ease, border-color 300ms ease;
+    }
     label{
         span{
             font-size: 12px;
@@ -186,11 +215,17 @@ date-input, date-range-input{
             outline-color: red;
         }
     }
+    &.warning{
+        input{
+            border-color: $warn-brd;
+            background-color: $warn-bk;
+        }
+    }
     date-picker,
     date-range-picker{
         display: none;
         position: absolute;
-        top: 25px;
+        top: 110%;
         left: 0;
         z-index: 1;
         &.bottom-align{
@@ -223,13 +258,27 @@ date-range-input{
 date-range-picker{
     border-radius: 4px;
     display: inline-block;
-    border: 1px solid $calendar-brd;
+    border: 1px solid $brd;
     padding: 3px;
-    background: $calendar-bg;
+    background: $bg;
     &.show{
         display: inline-block;
         date-picker{
             display: inline-block;
+        }
+    }
+}
+
+date-range-inputs{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    date-input{
+        &:first-child{
+            margin-right: 2px;
+        }
+        &:last-child{
+            margin-left: 2px;
         }
     }
 }
