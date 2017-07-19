@@ -33,7 +33,7 @@ class DatePicker extends BaseComponent {
 </div>
 <div class="cal-container" ref="container"></div>
 <div class="cal-footer">
-	<a href="javascript:void(0);" ref="footerLink"></a>
+	<span ref="footerLink"></span>
 </div>
 </div>`;
 	}
@@ -507,8 +507,11 @@ class DatePicker extends BaseComponent {
 		});
 
 		this.on(this.footerLink, 'click', () => {
+			this.focus();
 			this.current = new Date();
 			this.render();
+			this.valueDate = copy(this.current);
+			this.emitValue();
 		});
 
 		this.on(this.container, 'click', (e) => {
@@ -541,7 +544,7 @@ class DatePicker extends BaseComponent {
 	}
 }
 
-const today = new Date(2017, 6, 3);
+const today = new Date();
 
 function getSelectedDate (date, current) {
 	if (date.getMonth() === current.getMonth() && date.getFullYear() === current.getFullYear()) {

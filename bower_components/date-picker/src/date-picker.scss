@@ -173,7 +173,8 @@ date-picker{
     .cal-footer{
         text-align: center;
         padding: 5px;
-        a{
+        span{
+            cursor: pointer;
             color: $link;
             text-decoration: none;
             &:hover{
@@ -192,6 +193,7 @@ date-picker{
 }
 
 date-input, date-range-input{
+    display: inline-block;
     position: relative;
     //outline: none;
     input{

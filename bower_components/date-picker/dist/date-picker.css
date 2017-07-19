@@ -117,10 +117,11 @@ date-picker {
   date-picker .cal-footer {
     text-align: center;
     padding: 5px; }
-    date-picker .cal-footer a {
+    date-picker .cal-footer span {
+      cursor: pointer;
       color: #0968d2;
       text-decoration: none; }
-      date-picker .cal-footer a:hover {
+      date-picker .cal-footer span:hover {
         text-decoration: underline; }
   date-picker.minimal .calendar {
     border: 0; }
@@ -128,6 +129,7 @@ date-picker {
     display: none; }
 
 date-input, date-range-input {
+  display: inline-block;
   position: relative; }
   date-input input, date-range-input input {
     border: 1px solid #ccc;
