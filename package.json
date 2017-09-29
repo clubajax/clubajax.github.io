@@ -1,0 +1,26 @@
+{
+  "name": "clubajax.github.io",
+  "version": "1.0.0",
+  "description": "Club AJAX Example Website",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clubajax/clubajax.github.io.git"
+  },
+  "author": "@clubajax",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clubajax/clubajax.github.io/issues"
+  },
+  "homepage": "https://github.com/clubajax/clubajax.github.io#readme",
+  "dependencies": {
+    "@clubajax/mouse": "^1.0.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-http-server": "^2.0.0"
+  }
+}
