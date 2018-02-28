@@ -1,11 +1,11 @@
 {
   "name": "glowacki",
   "homepage": "https://github.com/clubajax/ben-glowacki",
-  "_release": "bfbaeebf42",
+  "_release": "3ee2fbfb49",
   "_resolution": {
     "type": "branch",
     "branch": "form-refactor",
-    "commit": "bfbaeebf424497fd4eb17c734b9c63a181ad6f7e"
+    "commit": "3ee2fbfb49f5ea4ccc4b68933df2aaa06e28c3e9"
   },
   "_source": "https://github.com/clubajax/ben-glowacki.git",
   "_target": "form-refactor",
