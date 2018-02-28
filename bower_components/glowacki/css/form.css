@@ -240,6 +240,25 @@ fieldset{
 }
 
 
+#contact-form date-input{
+	width: 100%;
+}
+#contact-form date-input label {
+	margin: 0;
+}
+
+#contact-form date-input span {
+	margin: 0;
+	color: #131e28;
+	display: block;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+#contact-form date-input .cal-footer span {
+	font-size: 13px;
+}
+
 
 #contact-form label.checkbox{
 	margin: 60px 0 40px 0;
@@ -251,6 +270,7 @@ label.checkbox{
 input[type="checkbox"] {
 	visibility: hidden;
 	position: absolute;
+	width: 1px !important;
 }
 input[type="checkbox"] + ins{
 	text-decoration: none;
