@@ -1,20 +1,27 @@
-const dom = require('dom');
-const BaseComponent = require('BaseComponent');
+const BaseComponent = require('./BaseComponent');
 
 function assignRefs (node) {
-    dom.queryAll(node, '[ref]').forEach(function (child) {
+
+    [...node.querySelectorAll('[ref]')].forEach(function (child) {
         let name = child.getAttribute('ref');
+		child.removeAttribute('ref');
         node[name] = child;
     });
 }
 
 function assignEvents (node) {
     // <div on="click:onClick">
-    dom.queryAll(node, '[on]').forEach(function (child) {
-        let
+	[...node.querySelectorAll('[on]')].forEach(function (child, i, children) {
+		if(child === node){
+			return;
+		}
+		let
             keyValue = child.getAttribute('on'),
             event = keyValue.split(':')[0].trim(),
             method = keyValue.split(':')[1].trim();
+		// remove, so parent does not try to use it
+		child.removeAttribute('on');
+
         node.on(child, event, function (e) {
             node[method](e)
         })

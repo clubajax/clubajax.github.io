@@ -1,6 +1,6 @@
 {
   "name": "dates",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "authors": [
     "Mike Wilcox <anm9tr@gmail.com>"
   ],
@@ -12,11 +12,11 @@
   ],
   "main": "src/dates.js",
   "homepage": "https://github.com/clubajax/dates",
-  "_release": "1.3.1",
+  "_release": "1.4.0",
   "_resolution": {
     "type": "version",
-    "tag": "v1.3.1",
-    "commit": "69b77b0077423dcae3426ec0722d4762e1ac340a"
+    "tag": "v1.4.0",
+    "commit": "c21288c2664b1af34ff0fec40fd37eef8475850e"
   },
   "_source": "https://github.com/clubajax/dates.git",
   "_target": "*",

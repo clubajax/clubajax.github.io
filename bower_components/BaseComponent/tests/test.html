@@ -39,15 +39,17 @@
 			display: inline-block;
 			width: 70px;
 		}
-		test-list-component{
+
+		test-list-component {
 			display: block;
 			width: 200px;
 			height: 200px;
 			overflow-y: auto;
 			margin: 20px;
 		}
+
 		test-list-component-item,
-		test-list-component-tmpl{
+		test-list-component-tmpl {
 			display: block;
 			font-size: 11px;
 			border: 1px solid #ccc;
@@ -55,15 +57,18 @@
 			padding: 10px;
 			margin-bottom: 5px;
 		}
+
 		test-list-component-item span,
-		test-list-component-tmpl span{
+		test-list-component-tmpl span {
 			margin: 3px;
 		}
+
 		test-list-component-item .indent,
-		test-list-component-tmpl .indent{
+		test-list-component-tmpl .indent {
 			margin-left: 20px;
 		}
-		test-list-component-tmpl{
+
+		test-list-component-tmpl {
 			background-color: #d7f7ff;
 		}
 	</style>
@@ -85,7 +90,7 @@
 	</li>
 </template>
 
-<test-props disabled readonly id="test-1"></test-props>
+<!--<test-props disabled readonly id="test-1"></test-props>-->
 
 <div id="mocha"></div>
 
@@ -152,6 +157,9 @@
 
 <script>
 	window.mocha.setup('tdd');
+
+	var on = window.on;
+	var dom = window.dom;
 
 	suite('BaseComponent', function () {
 		this.timeout(3000);
@@ -224,6 +232,35 @@
 		});
 
 		suite('lifecycle methods', function () {
+			test('onDomReady should handle a sngle node', function (done) {
+				var node = dom('test-a', {}, body);
+				onDomReady(node, function (n) {
+					expect(dom.isNode(n)).to.equal(true);
+					dom.destroy(node);
+					done();
+				});
+			});
+
+			test('onDomReady should handle an array of nodes', function (done) {
+				var n1 = dom('test-a', {}, body);
+				var n2 = dom('test-a', {}, body);
+				var n3 = dom('test-a');
+				onDomReady([n1, n2, n3], function (array) {
+					expect(dom.isNode(array[0])).to.equal(true);
+					expect(dom.isNode(array[1])).to.equal(true);
+					expect(dom.isNode(array[2])).to.equal(true);
+					dom.destroy(n1);
+					dom.destroy(n2);
+					dom.destroy(n3);
+					done();
+				});
+
+				// ensure async test
+				setTimeout(function () {
+					body.appendChild(n3);
+				}, 30);
+			});
+
 			test('it should should be in the domready state when re-added to the DOM', function (done) {
 				var
 					node,
@@ -259,6 +296,7 @@
 				node.destroy();
 				h.remove();
 			});
+
 			test('it should call component\'s `disconnected` method', function () {
 				var
 					node,
@@ -277,6 +315,7 @@
 				h1.remove();
 				h2.remove();
 			});
+
 			test('it should call component\'s `domReady` method', function (done) {
 				var
 					node,
@@ -292,6 +331,7 @@
 					done();
 				});
 			});
+
 			test('it should call component\'s `domReady` method when children are ready', function (done) {
 				var
 					parent,
@@ -314,6 +354,7 @@
 					//});
 				})
 			});
+
 			test('it should call component\'s `domReady` method when descendants are ready', function (done) {
 				var
 					node,
@@ -420,6 +461,24 @@
 		});
 
 		suite('template refs', function () {
+
+			test('it should handle deep child templates with refs', function (done) {
+				var node = dom('test-tmpl-cmpt-refs', {}, body);
+				onDomReady(node, function () {
+					var results = [];
+					var h = on(document, 'ref-change-called', function (e) {
+						results.push(e.detail.value);
+					});
+					expect(node.btnNode).to.equal(undefined); // should not pick up child template
+					var buttons = dom.queryAll(node, 'button').forEach(function (btn) {
+						on.emit(btn, 'click');
+					});
+					expect(results.join(',')).to.equal('A,B,C');
+					done();
+				});
+
+			});
+
 			test('it should reference nodes with the `ref` attribute', function () {
 				var node = dom('test-tmpl-refs', {}, body);
 				expect(dom.isNode(node.labelNode)).to.equal(true);
@@ -489,6 +548,32 @@
 		});
 
 		suite('properties', function () {
+			test.skip('it should dynamically set observedAttributes', function (done) {
+				// putting observedAttributes on the constructor doesn't work
+				// because the magic happens in customElements.define, well before
+				// BaseComponent has a chance to do anything
+				var node = dom('test-new-props', { nbc: 'A', foo: 'B'}, body);
+				onDomReady(node, function () {
+					node.setAttribute('foo', 'C');
+					node.setAttribute('nbc', 'D');
+					done();
+				});
+			});
+
+			test('it should set properties and booleans only once', function (done) {
+				var events = [];
+				on(document, 'foo-called', function () {
+					events.push(1);
+				});
+				on(document, 'nbc-called', function () {
+					events.push(1);
+				});
+				var node = dom('test-props', { attr: { nbc: true } }, body);
+				onDomReady(node, function () {
+					expect(events.join(',')).to.equal('1');
+					done();
+				});
+			});
 
 			test('it should set properties from naked attributes', function () {
 				var node = dom.byId('test-1');
@@ -499,46 +584,51 @@
 				expect(node.readonly).to.equal(true);
 			});
 
-			test('it should sync properties and attributes', function () {
+			test('it should sync properties and attributes', function (done) {
 				var node = dom('test-props', { attr: { foo: true } }, body);
-				expect(node.getAttribute('foo')).to.equal('true');
-				expect(node.foo).to.equal(true);
+				onDomReady(node, function () {
+					expect(node.getAttribute('foo')).to.equal('true');
+					expect(node.foo).to.equal(true);
 
-				node.foo = 99;
-				expect(node.getAttribute('foo')).to.equal('99');
-				expect(node.foo).to.equal(99);
+					node.foo = 99;
+					expect(node.getAttribute('foo')).to.equal('99');
+					expect(node.foo).to.equal(99);
 
-				expect(node.getAttribute('bar')).to.equal(null);
-				expect(node.bar).to.equal(null);
+					expect(node.getAttribute('bar')).to.equal(null);
+					expect(node.bar).to.equal(null);
 
-				node.bar = 88;
-				expect(node.getAttribute('bar')).to.equal('88');
-				expect(node.bar).to.equal(88);
-				expect(node['bar-changed']).to.equal(88);
+					node.bar = 88;
+					expect(node.getAttribute('bar')).to.equal('88');
+					expect(node.bar).to.equal(88);
+					expect(node['bar-changed']).to.equal(88);
 
-				node.setAttribute('bar', true);
-				expect(node.getAttribute('bar')).to.equal('true');
-				expect(node.bar).to.equal(true);
+					node.setAttribute('bar', true);
+					expect(node.getAttribute('bar')).to.equal('true');
+					expect(node.bar).to.equal(true);
 
-				node.tabindex = 0;
-				expect(node.getAttribute('tabindex')).to.equal('0');
+					node.tabindex = 0;
+					expect(node.getAttribute('tabindex')).to.equal('0');
 
-				expect(node['bar-changed']).to.equal(true);
+					expect(node['bar-changed']).to.equal(true);
+					done();
+				});
 			});
 
-			test('it should handle properties', function () {
+			test('it should handle properties', function (done) {
 				var node = dom('test-props', {}, body);
-				node.setAttribute('min', '50%');
-				node.setAttribute('max', '-75%');
+				onDomReady(node, function () {
+					node.setAttribute('min', '50%');
+					node.setAttribute('max', '-75%');
 
-				// values changed in
-				expect(node.min).to.equal(50);
-				expect(node.max).to.equal(-75);
-				expect(node.getAttribute('min')).to.equal('50');
-				expect(node.getAttribute('max')).to.equal('-75');
+					expect(node.min).to.equal('50%');
+					expect(node.max).to.equal('-75%');
+					expect(node.getAttribute('min')).to.equal('50%');
+					expect(node.getAttribute('max')).to.equal('-75%');
+					done();
+				});
 			});
 
-			test('it should handle property callbacks and changed values', function () {
+			test('it should handle property callbacks and changed values', function (done) {
 				var node = dom('test-props', {}, body);
 
 				node.onMin = function (value) {
@@ -551,10 +641,9 @@
 				node.setAttribute('max', '-75%');
 
 				onDomReady(node, function () {
-					expect(node.min).to.equal(62);
-					expect(node.max).to.equal(-76);
-					expect(node.getAttribute('min')).to.equal('50');
-					expect(node.getAttribute('max')).to.equal('-75');
+					expect(node.getAttribute('min')).to.equal('50%');
+					expect(node.getAttribute('max')).to.equal('-75%');
+					done();
 				});
 			});
 
@@ -567,14 +656,13 @@
 				node.setAttribute('my-complex-prop', 'yes');
 
 				onDomReady(node, function () {
-					expect(node['my-complex-prop']).to.equal('no');
 					expect(node.getAttribute('my-complex-prop')).to.equal('yes');
 					done();
 				});
 
 			});
 
-			test('it should sync booleans and attributes', function (done) {
+			test('it should sync booleans and attributes (2)', function (done) {
 				var node = dom('test-props', { attr: { nbc: true, disabled: true } }, body);
 				var onDisabled;
 				var onReadonly;
@@ -647,13 +735,15 @@
 				});
 			});
 		});
-		
+
 		suite('item-template/component', function () {
 			test('it should render a dom-based list', function () {
 				var data = rand.data(10);
-				var node = dom('test-list-component', {attr:{
-					'item-tag': 'test-list-component-item'
-				}}, body);
+				var node = dom('test-list-component', {
+					attr: {
+						'item-tag': 'test-list-component-item'
+					}
+				}, body);
 				setTimeout(function () {
 					console.time('dom-based');
 					node.data = data;
@@ -663,9 +753,11 @@
 
 			test('it should render a template-based list', function () {
 				var data = rand.data(10);
-				var node = dom('test-list-component', {attr:{
-					'item-tag': 'test-list-component-tmpl'
-				}}, body);
+				var node = dom('test-list-component', {
+					attr: {
+						'item-tag': 'test-list-component-tmpl'
+					}
+				}, body);
 				setTimeout(function () {
 					console.time('tmpl-based');
 					node.data = data;

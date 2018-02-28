@@ -1,4 +1,4 @@
-/* UMD.define */ (function (root, factory) {
+(function (root, factory) {
     if (typeof customLoader === 'function'){ customLoader(factory, 'dates'); }
     else if (typeof define === 'function' && define.amd){ define([], factory); }
     else if(typeof exports === 'object'){ module.exports = factory(); }
@@ -7,9 +7,7 @@
 }(this, function () {
 
     'use strict';
-    // dates.js
-    //  date helper lib
-    //
+
     var
         // tests that it is a date string, not a valid date. 88/88/8888 would be true
         dateRegExp = /^(\d{1,2})([\/-])(\d{1,2})([\/-])(\d{4})\b/,
@@ -105,7 +103,7 @@
         return false;
     }
 
-    function isDateType(value) {
+    function isDate(value) {
         var parts, day, month, year, hours, minutes, seconds, ms;
         switch (typeof value) {
             case 'object':
@@ -155,7 +153,6 @@
         // TODO: do we really want a 0-based index? or should it be a 1-based one?
         var index = monthDict[name];
         return typeof index === 'number' ? index : void 0;
-        // TODO: we return undefined for wrong month names --- is it right?
     }
 
     function getMonthName(date) {
@@ -163,7 +160,7 @@
     }
 
     function getFirstSunday(date) {
-        // TODO: what does it return? a negative index related to the 1st of the month?
+        // returns a negative index related to the 1st of the month
         var d = new Date(date.getTime());
         d.setDate(1);
         return -d.getDay();
@@ -180,20 +177,19 @@
         return month === 1 && isLeapYear(date) ? 29 : monthLengths[month];
     }
 
-    function strToDate(str) {
+    function toDate(str) {
         if (typeof str !== 'string') {
             return str;
         }
-        if (dates.timestamp.is(str)) {
+        if (isTimestamp(str)) {
             // 2000-02-29T00:00:00
-            return dates.timestamp.from(str);
+            return fromTimestamp(str);
         }
         // 11/20/2000
         var parts = dateRegExp.exec(str);
         if (parts && parts[2] === parts[4]) {
             return new Date(+parts[5], +parts[1] - 1, +parts[3]);
         }
-        // TODO: what to return for an invalid date? null?
         return new Date(-1); // invalid date
     }
 
@@ -209,7 +205,7 @@
         });
     }
 
-    function formatDate(date, delimiterOrPattern) {
+    function format(date, delimiterOrPattern) {
         if (delimiterOrPattern && delimiterOrPattern.length > 1) {
             return formatDatePattern(date, delimiterOrPattern);
         }
@@ -223,12 +219,12 @@
     }
 
     function dateToStr(date, delimiter) {
-        return formatDate(date, delimiter);
+        return format(date, delimiter);
     }
 
     function formatTime(date, usePeriod) {
         if (typeof date === 'string') {
-            date = strToDate(date);
+            date = toDate(date);
         }
 
         var
@@ -248,7 +244,7 @@
 
         retval = hours + ':' + pad(minutes) + ':' + pad(seconds);
 
-        if (usePeriod == true) {
+        if (usePeriod) {
             retval = retval + ' ' + period;
         }
 
@@ -257,7 +253,7 @@
 
     function period(date) {
         if (typeof date === 'string') {
-            date = strToDate(date);
+            date = toDate(date);
         }
 
         var hours = date.getHours();
@@ -397,75 +393,114 @@
         }
 
         if (daysAgo < -1) {
-            return formatDate(date);
+            return format(date);
         }
 
-        return !noDaysOfWeek && daysAgo < daysOfWeek.length ? daysOfWeek[date.getDay()] : formatDate(date);
+        return !noDaysOfWeek && daysAgo < daysOfWeek.length ? daysOfWeek[date.getDay()] : format(date);
     }
 
+	function toTimestamp (date) {
+		return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + 'T' +
+			pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds());
+	}
+
+	function fromTimestamp (str) {
+		// 2015-05-26T00:00:00
+
+		// strip timezone // 2015-05-26T00:00:00Z
+		str = str.split('Z')[0];
+
+		// ["2000-02-30T00:00:00", "2000", "02", "30", "00", "00", "00", index: 0, input: "2000-02-30T00:00:00"]
+		var parts = tsRegExp.exec(str);
+		// TODO: do we need a validation?
+		if (parts) {
+			// new Date(1995, 11, 17, 3, 24, 0);
+			return new Date(+parts[1], +parts[2] - 1, +parts[3], +parts[4], +parts[5], parseInt(parts[6], 10));
+		}
+		// TODO: what do we return for an invalid date? null?
+		return new Date(-1);
+	}
+
+	function isTimestamp (str) {
+		return typeof str === 'string' && tsRegExp.test(str);
+	}
+
     dates = {
-        months: {
-            full: months,
-            abbr: monthAbbr,
-            dict: monthDict
-        },
-        days: {
-            full: daysOfWeek,
-            abbr: days,
-            abbr3: days3,
-            dict: dayDict
-        },
-        length: length,
+    	// convertors
+		format: format,
+		formatTime: formatTime,
+		toDate: toDate,
+		isValid: isDate,
+		isDate: isDate,
+		isValidObject: isValidObject,
+		toISO: toISO,
+		toTimestamp: toTimestamp,
+		fromTimestamp: fromTimestamp,
+		isTimestamp: isTimestamp,
+		// math
         subtract: subtract,
         add: add,
-        addDays: addDays,
         diff: diff,
-        copy: copy,
-        clone: copy,
+		subtractDate: subtractDate,
         isLess: isLess,
         isGreater: isGreater,
-        toISO: toISO,
-        isValidObject: isValidObject,
-        isValid: isDateType,
-        isDateType: isDateType,
+		// special types
         isLeapYear: isLeapYear,
         getMonthIndex: getMonthIndex,
         getMonthName: getMonthName,
         getFirstSunday: getFirstSunday,
         getDaysInMonth: getDaysInMonth,
         getDaysInPrevMonth: getDaysInPrevMonth,
-        formatDate: formatDate,
-        formatTime: formatTime,
-        strToDate: strToDate,
-        subtractDate: subtractDate,
-        dateToStr: dateToStr,
+        // helpers
         period: period,
         natural: natural,
         getNaturalDay: getNaturalDay,
-        pad: pad,
+		// utils
+		copy: copy,
+		clone: copy,
+		length: length,
+		pad: pad,
+		// lists
+		months: {
+			full: months,
+			abbr: monthAbbr,
+			dict: monthDict
+		},
+		days: {
+			full: daysOfWeek,
+			abbr: days,
+			abbr3: days3,
+			dict: dayDict
+		},
+		// deprecated
+		dateToStr: function (date) {
+			console.warn('deprecated - Use format instead');
+			return format(date);
+		},
+		formatDate: function (date) {
+			console.warn('deprecated - Use format instead');
+			return format(date);
+		},
+		strToDate: function (str) {
+			console.warn('deprecated - Use toDate instead');
+			return toDate(str)
+		},
+		isDateType: function (item) {
+			console.warn('deprecated - Use isDate instead');
+			return isDate(item);
+		},
         timestamp: {
             to: function(date) {
-                return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + 'T' +
-                    pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds());
+				console.warn('deprecated - Use toTimestamp instead');
+				return toTimestamp(date);
             },
             from: function(str) {
-                // 2015-05-26T00:00:00
-
-                // strip timezone // 2015-05-26T00:00:00Z
-                str = str.split('Z')[0];
-
-                // ["2000-02-30T00:00:00", "2000", "02", "30", "00", "00", "00", index: 0, input: "2000-02-30T00:00:00"]
-                var parts = tsRegExp.exec(str);
-                // TODO: do we need a validation?
-                if (parts) {
-                    // new Date(1995, 11, 17, 3, 24, 0);
-                    return new Date(+parts[1], +parts[2] - 1, +parts[3], +parts[4], +parts[5], parseInt(parts[6], 10));
-                }
-                // TODO: what do we return for an invalid date? null?
-                return new Date(-1);
+				console.warn('deprecated - Use fromTimestamp instead');
+				return fromTimestamp(str);
             },
             is: function(str) {
-                return tsRegExp.test(str);
+				console.warn('deprecated - Use isTimestamp instead');
+				return isTimestamp(str);
             }
         }
     };

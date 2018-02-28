@@ -55,22 +55,20 @@
 
             test('it should convert date strings', function () {
 
-                expect(string(dates.strToDate('2000-02-28T00:00:00'))).to.equal('02/28/2000');
-                expect(string(dates.strToDate('02/28/2000'))).to.equal('02/28/2000');
+                expect(string(dates.toDate('2000-02-28T00:00:00'))).to.equal('02/28/2000');
+                expect(string(dates.toDate('02/28/2000'))).to.equal('02/28/2000');
             });
 
             test('it should format a date based on a pattern', function () {
                 var date = new Date(2015, 0, 1),
-                    ts = dates.timestamp.from('2016-01-26T16:23:32.467');
-                console.log('date', date);
-                expect(dates.formatDate(date, 'mm dd yyyy')).to.equal('01 01 2015');
-                expect(dates.formatDate(date, 'm d yyyy')).to.equal('1 1 2015');
-                expect(dates.formatDate(date, 'MM dd yyyy')).to.equal('January 01 2015');
-                expect(dates.formatDate(date, 'M dd, yyyy')).to.equal('Jan 01, 2015');
-                expect(dates.formatDate(date, 'mm/dd/yy')).to.equal('01/01/15');
-                expect(dates.formatDate(date, 'yyyy/mm/dd')).to.equal('2015/01/01');
-                console.log('ts', ts);
-                expect(dates.formatDate(ts, 'M d, yyyy')).to.equal('Jan 26, 2016')
+                    ts = dates.fromTimestamp('2016-01-26T16:23:32.467');
+                expect(dates.format(date, 'mm dd yyyy')).to.equal('01 01 2015');
+                expect(dates.format(date, 'm d yyyy')).to.equal('1 1 2015');
+                expect(dates.format(date, 'MM dd yyyy')).to.equal('January 01 2015');
+                expect(dates.format(date, 'M dd, yyyy')).to.equal('Jan 01, 2015');
+                expect(dates.format(date, 'mm/dd/yy')).to.equal('01/01/15');
+                expect(dates.format(date, 'yyyy/mm/dd')).to.equal('2015/01/01');
+                expect(dates.format(ts, 'M d, yyyy')).to.equal('Jan 26, 2016')
             });
 
             test('it should subtract days', function () {
@@ -153,11 +151,11 @@
             test('it should add days', function () {
                 var result;
 
-                result = dates.addDays(new Date(2016, 2, 5), 1);
-                expect(dates.formatDate(result)).to.equal(dates.formatDate(new Date(2016, 2, 6)));
+                result = dates.add(new Date(2016, 2, 5), 1);
+                expect(dates.format(result)).to.equal(dates.format(new Date(2016, 2, 6)));
 
                 result = dates.add(new Date(2016, 2, 5), 45);
-                expect(dates.formatDate(result)).to.equal(dates.formatDate(new Date(2016, 3, 19)));
+                expect(dates.format(result)).to.equal(dates.format(new Date(2016, 3, 19)));
 
             });
             test('it should add months', function () {

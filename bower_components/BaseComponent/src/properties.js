@@ -1,12 +1,13 @@
-const BaseComponent = require('BaseComponent');
-const dom = require('dom');
+const BaseComponent = require('./BaseComponent');
 
 function setBoolean (node, prop) {
+	let propValue;
 	Object.defineProperty(node, prop, {
 		enumerable: true,
 		configurable: true,
 		get () {
-			return node.hasAttribute(prop);
+			const att = this.getAttribute(prop);
+			return (att !== undefined && att !== null && att !== 'false' && att !== false);
 		},
 		set (value) {
 			this.isSettingAttribute = true;
@@ -15,9 +16,19 @@ function setBoolean (node, prop) {
 			} else {
 				this.removeAttribute(prop);
 			}
+			if (this.attributeChanged) {
+				this.attributeChanged(prop, value);
+			}
 			const fn = this[onify(prop)];
-			if(fn){
-				fn.call(this, value);
+			if (fn) {
+				const eventName = this.connectedProps ? 'onConnected' : 'onDomReady';
+				window[eventName](this, () => {
+
+					if (value !== undefined && propValue !== value) {
+						value = fn.call(this, value) || value;
+					}
+					propValue = value;
+				});
 			}
 
 			this.isSettingAttribute = false;
@@ -31,18 +42,23 @@ function setProperty (node, prop) {
 		enumerable: true,
 		configurable: true,
 		get () {
-			return propValue !== undefined ? propValue : dom.normalize(this.getAttribute(prop));
+			return propValue !== undefined ? propValue : normalize(this.getAttribute(prop));
 		},
 		set (value) {
 			this.isSettingAttribute = true;
 			this.setAttribute(prop, value);
+			if (this.attributeChanged) {
+				this.attributeChanged(prop, value);
+			}
 			const fn = this[onify(prop)];
 			if(fn){
-				onDomReady(this, () => {
-					value = fn.call(this, value) || value;
+				const eventName = this.connectedProps ? 'onConnected' : 'onDomReady';
+				window[eventName](this, () => {
 					if(value !== undefined){
 						propValue = value;
 					}
+
+					value = fn.call(this, value) || value;
 				});
 			}
 			this.isSettingAttribute = false;
@@ -111,11 +127,33 @@ function boolNorm (value) {
 	if(value === ''){
 		return true;
 	}
-	return dom.normalize(value);
+	return normalize(value);
 }
 
 function propNorm (value) {
-	return dom.normalize(value);
+	return normalize(value);
+}
+
+function normalize(val) {
+	if (typeof val === 'string') {
+		val = val.trim();
+		if (val === 'false') {
+			return false;
+		} else if (val === 'null') {
+			return null;
+		} else if (val === 'true') {
+			return true;
+		}
+		// finds strings that start with numbers, but are not numbers:
+		// '1team' '123 Street', '1-2-3', etc
+		if (('' + val).replace(/-?\d*\.?\d*/, '').length) {
+			return val;
+		}
+	}
+	if (!isNaN(parseFloat(val))) {
+		return parseFloat(val);
+	}
+	return val;
 }
 
 BaseComponent.addPlugin({

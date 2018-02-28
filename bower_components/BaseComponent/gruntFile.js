@@ -6,10 +6,11 @@ module.exports = function (grunt) {
     
     // collect dependencies from node_modules
     let nm = path.resolve(__dirname, 'node_modules'),
-        vendorAliases = ['dom', 'on', 'randomizer', 'custom-elements-polyfill'],
-		baseAliases = ['./src/BaseComponent', './src/properties', './src/refs', './src/template', './src/item-template'],
-		allAliases = vendorAliases.concat(baseAliases),
-		pluginAliases = ['dom', 'on', 'BaseComponent'],
+        vendorAliases = ['@clubajax/on', '@clubajax/dom', 'randomizer', '@clubajax/custom-elements-polyfill'],
+		devAliases = [...vendorAliases],
+		baseAliases = ['./src/BaseComponent', './src/properties', './src/refs', './src/template'],  //, './src/item-template'
+		// allAliases = vendorAliases.concat(baseAliases),
+		pluginAliases = ['@clubajax/on', 'BaseComponent'],
         sourceMaps = true,
         watch = false,
         watchPort = 35750,
@@ -31,7 +32,7 @@ module.exports = function (grunt) {
                 dest: 'tests/dist/vendor.js',
                 options: {
                     // expose the modules
-                    alias: vendorAliases.map(function (module) {
+                    alias: devAliases.map(function (module) {
                         return module + ':';
                     }),
                     // not consuming any modules
@@ -49,7 +50,7 @@ module.exports = function (grunt) {
                     // not using browserify-watch; it did not trigger a page reload
                     watch: false,
                     keepAlive: false,
-                    external: vendorAliases,
+                    external: devAliases,
 					alias: {
                     	'BaseComponent': './src/BaseComponent'
 					},
@@ -66,6 +67,32 @@ module.exports = function (grunt) {
                     }
                 }
             },
+			test: {
+				files: {
+					'tests/dist/dist-output.js': ['tests/src/globals.js', 'tests/src/dist-test.js']
+				},
+				options: {
+					// not using browserify-watch; it did not trigger a page reload
+					watch: false,
+					keepAlive: false,
+					external: devAliases,
+
+					alias: {
+						// needed for internal references
+						'BaseComponent': './src/BaseComponent'
+					},
+					browserifyOptions: {
+						debug: sourceMaps,
+						standalone: 'BaseComponent',
+					},
+					// since this is testing the distro, we need to babelize the test
+					transform: babelTransform,
+					postBundleCB: function (err, src, next) {
+						console.timeEnd('build');
+						next(err, src);
+					}
+				}
+			},
 			BaseComponent:{
             	files:{
             		'dist/BaseComponent.js': ['src/BaseComponent.js']
@@ -92,25 +119,55 @@ module.exports = function (grunt) {
 					}
 				}
 			},
-            deploy: {
+            xdeploy: {
                 files: {
-                    'dist/core.js': ['src/deploy.js']
+                	// remember to include the extension
+                    'dist/index.js': ['./src/BaseComponent.js']
                 },
-                options: {
+				options: {
+					alias: {
+						// needed for internal references
+						'BaseComponent': './src/BaseComponent.js'
+					},
+					external: [...vendorAliases],
 					transform: babelTransform,
                     browserifyOptions: {
-						standalone: 'core',
+						standalone: 'BaseComponent',
+						//standalone: 'TestComponent',
                         debug: false
                     }
                 }
-            }
+            },
+			deploy: {
+				files: {
+					// remember to include the extension
+					'dist/index.js': ['./src/deploy.js']
+				},
+				options: {
+					alias: {
+						// needed for internal references
+						'TestComponent': './src/TestComponent.js',
+					},
+					external: [...vendorAliases],
+					transform: babelTransform,
+					browserifyOptions: {
+						//standalone: 'BaseComponent',
+						standalone: 'TestComponent',
+						debug: false
+					}
+				}
+			}
         },
         
         watch: {
             scripts: {
-                files: ['tests/src/*.js', 'src/*.js', 'tests/*.html'],
+                files: ['tests/src/*.js', 'src/*.js'],
                 tasks: ['build-dev']
             },
+			html: {
+				files: ['tests/*.html'],
+				tasks: []
+			},
             options: {
                 livereload: watchPort
             }
@@ -148,7 +205,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build-dev', function (which) {
         console.time('build');
         grunt.task.run('browserify:dev');
-
+		//grunt.task.run('browserify:test');
     });
 
     // task that builds vendor and dev files during development
@@ -169,12 +226,15 @@ module.exports = function (grunt) {
     });
 
 	grunt.registerTask('deploy', function (which) {
-		const compile = require('./scripts/compile');
-		compile('BaseComponent');
-		compile('properties');
-		compile('template');
-		compile('refs');
-		compile('item-template');
+		// const compile = require('./scripts/compile');
+		// compile('BaseComponent');
+		// compile('properties');
+		// compile('template');
+		// compile('refs');
+		// compile('item-template');
+		//grunt.task.run('browserify:deploy');
+
+		const compile = require('./scripts/compile-all');
 	});
 
 	grunt.loadNpmTasks('grunt-concurrent');

@@ -7,16 +7,53 @@ window.rand = require('randomizer');
 
 class TestProps extends BaseComponent {
 
+	constructor(...args) {
+		super();
+		// this.connectedProps = true;
+	}
+
     static get observedAttributes() { return ['min', 'max', 'foo', 'bar', 'nbc', 'cbs', 'disabled', 'readonly', 'tabindex', 'my-complex-prop']; }
     get props () { return ['foo', 'bar', 'tabindex', 'min', 'max', 'my-complex-prop']; }
     get bools () { return ['nbc', 'cbs', 'disabled', 'readonly']; }
 
+    onFoo () {
+		on.fire(document, 'foo-called');
+	}
+
+	onNbc () {
+		on.fire(document, 'nbc-called');
+	}
+
     attributeChanged (name, value) {
         this[name + '-changed'] = dom.normalize(value) || value !== null;
-    }
+	}
 }
-
 customElements.define('test-props', TestProps);
+
+
+class TestNewProps extends BaseComponent {
+
+	constructor(...args) {
+		super();
+		console.log('NEW!');
+		//this.setProps(['foo']);
+	}
+
+	getProps () {
+		return ['foo']
+	}
+
+	// static get observedAttributes() {
+	// 	debugger
+	// 	return ['nbc']
+	// }
+
+	attributeChanged (name, value) {
+		console.log(' ---- change', name, value);
+	}
+}
+customElements.define('test-new-props', TestNewProps);
+window.TestNewProps = TestNewProps;
 
 class TestLifecycle extends BaseComponent {
 
@@ -105,6 +142,34 @@ class TestTmplRefs extends BaseComponent {
     }
 }
 customElements.define('test-tmpl-refs', TestTmplRefs);
+
+
+class ChildButton extends BaseComponent {
+	get templateString () {
+		return `<button ref="btnNode" on="click:onClick">Click Me</button>`;
+	}
+
+	onClick () {
+		this.emit('change', {value: this.getAttribute('value')});
+	}
+
+}
+customElements.define('child-button', ChildButton);
+
+class TestTmplCmptRefs extends BaseComponent {
+	get templateString () {
+		return `<div>
+			<child-button on="change:onChange" value="A" ></child-button>
+			<child-button on="change:onChange" value="B" ></child-button>
+			<child-button on="change:onChange" value="C" ></child-button>
+        </div>`;
+	}
+
+	onChange (e) {
+		on.fire(document, 'ref-change-called', {value:e.value});
+	}
+}
+customElements.define('test-tmpl-cmpt-refs', TestTmplCmptRefs);
 
 class TestTmplContainer extends BaseComponent {
     get templateString () {

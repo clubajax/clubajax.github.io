@@ -1,0 +1,27 @@
+{
+  "name": "ben-glowacki",
+  "homepage": "https://github.com/clubajax/ben-glowacki",
+  "authors": [
+    "Mike Wilcox <anm9tr@gmail.com>"
+  ],
+  "description": "Website for Ben",
+  "main": "index.html",
+  "license": "UNLICENSED",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "9178e5426e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9178e5426ecfc61d656ba7db32762cebc3a42b43"
+  },
+  "_source": "https://github.com/clubajax/ben-glowacki.git",
+  "_target": "*",
+  "_originalSource": "clubajax/ben-glowacki"
+}
