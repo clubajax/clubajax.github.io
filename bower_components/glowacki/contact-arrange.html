@@ -16,6 +16,14 @@
 			text-decoration: underline;
 		}
 	</style>
+	<script>
+
+		function validate (e) {
+			debugger
+			console.log('VA', e);
+			return false;
+		}
+	</script>
 </head>
 <body>
 <contact>
@@ -54,7 +62,7 @@
 					</li>
 					<li class="nav-bar__list-item">
 						<div class="dropdown">
-							<label class="nav-dropdown fill-div" for="dropdown-1">More</label> <input aria-hidden="true" class="dropdown-open" hidden="" id="dropdown-1" type="checkbox">
+							<label class="nav-dropdown fill-div" for="dropdown-1" tabindex="0">More</label> <input aria-hidden="true" class="dropdown-open" hidden="" id="dropdown-1" type="checkbox">
 							<label class="dropdown-overlay" for="dropdown-1"></label>
 							<div class="dropdown-inner">
 								<ul class="nav-bar__list">
@@ -86,112 +94,109 @@
 	<left-column></left-column>
 	<section class="">
 		<article>
-			<form id="frmContact" name="frmContact" action="cgi-bin/contact.cgi" method="post" onsubmit="return CheckFields();">
-				<main>
-					<div id="contact-form">
-						<div class="contact-form">
-							<p>
-								<label for="name">Name*</label>
-								<input tabindex="1" placeholder="Your Name" aria-labelledby="name" aria-required="true" data-val="true" data-val-required="The Name field is required." id="Name" name="Name" type="text" value="">
-							</p>
-							<p>
-								<label for="email">Email*</label>
-								<input tabindex="2" placeholder="name@example.com" aria-labelledby="email" aria-required="true" data-val="true" data-val-required="The Name field is required." id="email" name="email" type="text" value="">
-							</p>
-							<p>
-								<label for="title">Title/Position</label>
-								<input tabindex="3" aria-labelledby="title" id="title" name="title" type="text" value="">
-							</p>
-							<p>
-								<label for="company_name">Company Name</label>
-								<input tabindex="4" aria-labelledby="company_name" id="company_name" name="company_name" type="text" value="">
-							</p>
-							<p>
-								<label for="address">Address</label>
-								<input tabindex="5" aria-labelledby="address" id="address" name="address" type="text" value="">
-							</p>
-							<p>
-								<label for="city">City</label>
-								<input tabindex="6" aria-labelledby="city" id="city" name="city" type="text" value="">
-							</p>
-							<p>
-								<label for="state">State</label>
-								<input tabindex="7" aria-labelledby="state" id="state" name="state" type="text" value="">
-							</p>
-							<p>
-								<label for="zip">zip</label>
-								<input tabindex="8" aria-labelledby="zip" id="zip" name="zip" type="text" value="">
-							</p>
-							<p>
-								<label for="phone">Phone</label>
-								<input tabindex="9" aria-labelledby="phone" id="phone" name="phone" type="text" value="">
-							</p>
-						</div>
+			<!-- action="cgi-bin/contact.cgi" -->
+			<form id="contact-form" name="frmContact" method="get" onsubmit="return validate();">
+				<fieldset class="contact-form">
+					<label>
+						<span>Name*</span>
+						<input placeholder="Your Name" aria-labelledby="name" aria-required="true" data-val="true" required data-val-required="The Name field is required." name="Name" type="text" value="">
+					</label>
+					<label>
+						<span>Email*</span>
+						<input placeholder="name@example.com" aria-labelledby="email" aria-required="true" data-val="true" data-val-required="The Name field is required." name="email" type="text" value="">
+					</label>
+					<label>
+						<span>Title/Position</span>
+						<input aria-labelledby="title" name="title" type="text" value="">
+					</label>
+					<label>
+						<span>Company Name</span>
+						<input aria-labelledby="company_name" name="company_name" type="text" value="">
+					</label>
+					<label>
+						<span>Address</span>
+						<input aria-labelledby="address" name="address" type="text" value="">
+					</label>
+					<label>
+						<span>City</span>
+						<input aria-labelledby="city" name="city" type="text" value="">
+					</label>
+					<label>
+						<span>State</span>
+						<input aria-labelledby="state" name="state" type="text" value="">
+					</label>
+					<label>
+						<span>zip</span>
+						<input aria-labelledby="zip" name="zip" type="text" value="">
+					</label>
+					<label>
+						<span>Phone</span>
+						<input aria-labelledby="phone" name="phone" type="text" value="">
+					</label>
+				</fieldset>
 
-						<div class="contact-form">
-							<p class="select-wrapper">
-								<label for="presentation">Presentation You are Interested in</label>
-								<select tabindex="10" id="presentation" aria-labelledby="presentation" name="presentation">
-									<option value="1">Choose a Presentation</option>
-									<option value="2">Diversity According to Family Guy and South Park</option>
-									<option value="3">Happy Hour 24/7</option>
-									<option value="4">Walking is Over-Rated!</option>
-									<option value="5">Aren't We All Just A Little Bit Prejudiced?</option>
-									<option value="6">Nurture Your Nature</option>
+				<fieldset class="contact-form">
+					<label class="select-wrapper icon-drop">
+						<span>Presentation You are Interested in</span>
+						<select aria-labelledby="presentation" name="presentation">
+							<option value="1">Choose a Presentation</option>
+							<option value="2">Diversity According to Family Guy and South Park</option>
+							<option value="3">Happy Hour 24/7</option>
+							<option value="4">Walking is Over-Rated!</option>
+							<option value="5">Aren't We All Just A Little Bit Prejudiced?</option>
+							<option value="6">Nurture Your Nature</option>
+						</select>
+					</label>
+					<label>
+						<span>Date of Event</span>
+						<input placeholder="MM/DD/YY" aria-labelledby="event_date" name="event_date" type="text" value="">
+					</label>
+					<label>
+						<span>Time of Event</span>
+						<input aria-labelledby="event_time" name="event_time" type="text" value="">
+					</label>
+					<label>
+						<span>Location of Event</span>
+						<input aria-labelledby="event_location" name="event_location" type="text" value="">
+					</label>
+					<label>
+						<span>Who the Speaker Will be Addressing</span>
+						<input aria-labelledby="audience_type" name="audience_type" type="text" value="">
+					</label>
+					<label>
+						<span>Number of Attendees</span>
+						<input aria-labelledby="audience_count" name="audience_count" type="text" value="">
+					</label>
+					<label>
+						<span>Budget</span>
+						<input aria-labelledby="budget" name="budget" type="text" value="">
+					</label>
+					<label class="checkbox">
+						<input aria-labelledby="request_kit" type="checkbox" name="request_kit" role="checkbox" aria-checked="false" value="" />
+						<ins></ins>
+						<span>Request a Doing Happiness First Aid Kit</span>
+					</label>
 
-								</select>
-							</p>
-
-							<p>
-								<label for="event_date">Date of Event</label>
-								<input placeholder="MM/DD/YY" tabindex="11" aria-labelledby="event_date" id="event_date" name="event_date" type="text" value="">
-							</p>
-							<p>
-								<label for="event_time">Time of Event</label>
-								<input tabindex="12" aria-labelledby="phone" id="phone" name="phone" type="text" value="">
-							</p>
-							<p>
-								<label for="event_location">Location of Event</label>
-								<input tabindex="13" aria-labelledby="event_location" id="event_location" name="event_location" type="text" value="">
-							</p>
-							<p>
-								<label for="audience_type">Who the Speaker Will be Addressing</label>
-								<input tabindex="14" aria-labelledby="audience_type" id="audience_type" name="audience_type" type="text" value="">
-							</p>
-							<p>
-								<label for="audience_count">Number of Attendees</label>
-								<input tabindex="15" aria-labelledby="audience_count" id="audience_count" name="audience_count" type="text" value="">
-							</p>
-							<p>
-								<label for="budget">Budget</label>
-								<input tabindex="16" aria-labelledby="budget" id="budget" name="budget" type="text" value="">
-							</p>
-							<span>
-          <div class="radios-checkboxes">
-           
-              <label for="request_kit">
-              <input tabindex="17" aria-labelledby="request_kit" id="request_kit" type="checkbox" name="request_kit" role="checkbox" aria-checked="false" value=""><span></span><div>Request a Doing Happiness First Aid Kit</div>
-               </label>
-              
-          </div>
-          
-          
-        </span>
-
-							<p>
-								<label for="comments">Where You Heard About Us/Comments</label>
-								<textarea tabindex="18" aria-labelledby="comments" id="comments" name="comments" rows="6" cols="32" type="text" placeholder="Please add any comments…"></textarea>
-							</p>
+					<label>
+						<span>Where You Heard About Us/Comments</span>
+						<textarea aria-labelledby="comments" name="comments" rows="6" cols="32" placeholder="Please add any comments…"></textarea>
+					</label>
 
 
-						</div>
-				</main>
-
+				</fieldset>
 
 				<div class="submit">
 					<hr />
-					<button for="submit" tabindex="17" id="cmdSubmitContact" type="submit" name="cmdSubmitContact" value="submit_form" aria-label="submit" onclick="form.submit()">Submit</button>
-
+					<button
+						type="submit"
+						name="cmdSubmitContact"
+						value="submit_form"
+						aria-label="submit">Submit
+					</button>
+					<div>
+						Test icon
+						<i class="icon-check-empty"></i>
+					</div>
 				</div>
 
 			</form>
@@ -208,6 +213,7 @@
 </contact>
 </body>
 <script>
+
 	var h = document.getElementById("main-header");
 	var n = document.getElementById("nav-content");
 	var t = document.getElementById("top-bar");

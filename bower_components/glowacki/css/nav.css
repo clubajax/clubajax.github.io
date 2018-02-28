@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-	[id^="burger"] {
+[id^="burger"] {
 	display: none
 }
 nav[role="navigation"] ul>li {
@@ -9,7 +9,7 @@ nav[role="navigation"] ul>li {
 	width: 100%;
 	grid-column: auto;
 	background: transparent;
-	border-bottom: 0px solid transparent;
+	border-bottom: 0;
 }
 /*large screen*/
 
@@ -17,13 +17,6 @@ nav[role="navigation"] ul>li {
 	#slogan div {
 		margin-bottom: .02em;
 		/*border: 1px solid green;*/
-	}
-	
-	
-	.nav-bar__sub-label:hover {
-		color: #45515B;
-		opacity: .8;
-		text-decoration: underline
 	}
 	.nav-bar__list {
 		background-color: #eef2f6;
@@ -38,7 +31,7 @@ nav[role="navigation"] ul>li {
 		border-bottom: 1px solid #dedfdd
 	}
 	.nav-bar__list li:last-child {
-		border-bottom: 0px solid transparent
+		border-bottom: 0;
 	}
 	.nav-bar__list li:hover {
 		display: block;
@@ -53,7 +46,6 @@ nav[role="navigation"] ul>li {
 		grid-gap: 0px;
 	}
 	nav {
-		font-size: 20px;
 		margin: 0 20px;
 		color: #0E537A;
 		font-size: calc( 15px + (20 - 15) * ( (100vw - 400px) / ( 1920 - 1024)));
@@ -63,7 +55,6 @@ nav[role="navigation"] ul>li {
 		padding: 0;
 		list-style: none;
 		display: grid;
-		justify-content: space-around;
 		justify-content: end;
 		grid-gap: 1.10em;
 		grid-auto-flow: column;
@@ -78,11 +69,9 @@ nav[role="navigation"] ul>li {
 	.nav-dropdown:after {
 		position: relative;
 		display: inline-block;
-		content: "\f078";
-		font-family: FontAwesome;
+		content: "\e859";
 		font-size: 11px;
 		padding: 0 0 4px 5px;
-		display: inline-block;
 		vertical-align: middle;
 		line-height: normal
 	}
@@ -90,12 +79,6 @@ nav[role="navigation"] ul>li {
 		color: #45515B;
 		opacity: .8;
 		text-decoration: underline
-	}
-	.nav-bar__label::after, .nav-bar__sub-label::after {
-		content: "\f078";
-		font-family: FontAwesome;
-		font-size: 11px;
-		padding: 0 0 5px 5px
 	}
 	.dropdown {
 		display: inline-block
@@ -119,8 +102,7 @@ nav[role="navigation"] ul>li {
 		background-color: #dedfdd;
 		margin-top: 5px;
 		margin-left: 0;
-		padding: 0;
-		height: 0px;
+		height: 0;
 		top: 55px;
 		transform: translateY(-3em);
 		transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s
@@ -154,7 +136,7 @@ nav[role="navigation"] ul>li {
 		width: 100%;
 		grid-column: auto;
 		background: transparent;
-		border-bottom: 0px solid transparent;
+		border-bottom: 0 solid transparent;
 	}
 	nav[role="navigation"] ul .nav-bar__list-item li {
 		display: block;
@@ -178,7 +160,7 @@ nav[role="navigation"] ul>li {
 		grid-column: 1 / -1;
 		/* max-height: 720px; */
 		display: grid;
-		grid-gap: 0px;
+		grid-gap: 0;
 		/* display: none; */
 	}
 	.nav-content>input+label {
@@ -188,11 +170,6 @@ nav[role="navigation"] ul>li {
 		height: 55px;
 		width: 30px;
 		z-index: 1015;
-	}
-	.nav-bar__sub-label:hover {
-		color: #45515B;
-		opacity: .8;
-		text-decoration: underline
 	}
 	.nav-bar__list {
 		background-color: #eef2f6;
@@ -254,7 +231,7 @@ nav[role="navigation"] ul>li {
 		/* top: 0; */
 		left: 0;
 		width: 100%;
-		height: 0px;
+		height: 0;
 		z-index: 1010;
 		transition: 0.5s;
 		transition-delay: 0.5s;
@@ -269,10 +246,9 @@ nav[role="navigation"] ul>li {
 		transition-delay: 0.5s
 	}
 	nav {
-		font-size: 20px;
 		grid-auto-columns: 1fr;
 		color: #0E537A;
-		font-size: calc( 18px+(20 - 18) * ( (100vw - 400px) / ( 1920 - 768)));
+		font-size: calc( 18px + (20 - 18) * ( (100vw - 400px) / ( 1920 - 768)));
 		display: grid;
 	}
 	nav ul {
@@ -341,9 +317,8 @@ nav[role="navigation"] ul>li {
 		background-color: #dedfdd;
 		margin-top: 5px;
 		margin-left: 0;
-		padding: 0;
-		height: 0px;
-		top: 0x;
+		height: 0;
+		top: 0;
 		transform: translateY(0);
 		transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s
 	}

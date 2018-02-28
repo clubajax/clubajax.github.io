@@ -2,10 +2,10 @@
   font-family: 'fontawesome-icons';
   src: url('../font/fontawesome-icons.eot?95904469');
   src: url('../font/fontawesome-icons.eot?95904469#iefix') format('embedded-opentype'),
-       url('../font/fontawesome-icons.woff2?95904469') format('woff2'),
-       url('../font/fontawesome-icons.woff?95904469') format('woff'),
-       url('../font/fontawesome-icons.ttf?95904469') format('truetype'),
-       url('../font/fontawesome-icons.svg?95904469#fontawesome-icons') format('svg');
+	   url('../font/fontawesome-icons.woff2?95904469') format('woff2'),
+	   url('../font/fontawesome-icons.woff?95904469') format('woff'),
+	   url('../font/fontawesome-icons.ttf?95904469') format('truetype'),
+	   url('../font/fontawesome-icons.svg?95904469#fontawesome-icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,47 +14,50 @@
 /*
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
-    font-family: 'fontawesome-icons';
-    src: url('../font/fontawesome-icons.svg?95904469#fontawesome-icons') format('svg');
+	font-family: 'fontawesome-icons';
+	src: url('../font/fontawesome-icons.svg?95904469#fontawesome-icons') format('svg');
   }
 }
 */
- 
- [class^="icon-"]:before, [class*=" icon-"]:before {
+
+.nav-dropdown:after,
+ input[type="checkbox"] + ins:before,
+ [class^="icon-"]:before,
+ [class*=" icon-"]:before {
   font-family: "fontawesome-icons";
   font-style: normal;
   font-weight: normal;
   speak: none;
- 
+
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
   margin-right: .2em;
   text-align: center;
   /* opacity: .8; */
- 
+
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
- 
+
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
- 
+
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
   margin-left: .2em;
- 
+
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
- 
+
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- 
+
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
- 
+
 .icon-glass:before { content: '\e800'; } /* '' */
 .icon-music:before { content: '\e801'; } /* '' */
 .icon-search:before { content: '\e802'; } /* '' */
