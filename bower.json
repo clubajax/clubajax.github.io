@@ -25,6 +25,6 @@
     "dom": "clubajax/dom#2.0.0",
     "on": "clubajax/on#2.0.0",
 		"date-picker":"clubajax/date-picker#v0.9.2",
-		"glowacki": "clubajax/ben-glowacki"
+		"glowacki": "clubajax/ben-glowacki#form-refactor"
   }
 }
