@@ -142,13 +142,13 @@
 					<label class="select-wrapper icon-drop">
 						<span>Presentation You are Interested in</span>
 						<select aria-labelledby="presentation" name="presentation">
-							<option value="1">Choose a Presentation</option>
-							<option value="2">Diversity According to Family Guy and South Park</option>
-							<option value="3">Happy Hour 24/7</option>
-							<option value="4">Walking is Over-Rated!</option>
-							<option value="5">Aren't We All Just A Little Bit Prejudiced?</option>
-							<option value="6">Nurture Your Nature</option>
-						</select>
+									<option value="1">Choose a Presentation</option>
+									<option value="2">Diversity According to Family Guy and South Park</option>
+									<option value="3">Happy Hour 24/7</option>
+									<option value="4">Walking is Over-Rated!</option>
+									<option value="5">Aren't We All Just A Little Bit Prejudiced?</option>
+									<option value="6">Nurture Your Nature</option>
+								</select>
 					</label>
 
 					<date-input placeholder="MM/DD/YY" aria-labelledby="event_date" name="event_date" label="Date of Event" ></date-input>
@@ -177,8 +177,8 @@
 						<input aria-labelledby="request_kit" type="checkbox" name="request_kit" role="checkbox" aria-checked="false" value="" />
 						<ins></ins>
 						<span>Request a Doing Happiness First Aid Kit</span>
-					</label>
-
+               </label>
+              
 					<label>
 						<span>Where You Heard About Us/Comments</span>
 						<textarea aria-labelledby="comments" name="comments" rows="6" cols="32" placeholder="Please add any comments…"></textarea>
@@ -245,16 +245,7 @@
 			n.style.margin = "0 0 0 0 "
 			stuck = false;
 		}
-	}
-
-	const form = document.getElementById('test');
-	console.log('form', form);
-	form.addEventListener('submit', function (ev) {
-		console.log('SUBMIT');
-	})
-	form.addEventListener('error', function (ev) {
-		console.log('ERROR');
-	})
+	};
 
 </script>
 </html>

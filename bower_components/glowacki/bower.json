@@ -14,14 +14,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "_release": "4e9828fe79",
-  "_resolution": {
-    "type": "branch",
-    "branch": "form-refactor",
-    "commit": "4e9828fe79261abff76369a69f5a87cc9de23ba1"
-  },
-  "_source": "https://github.com/clubajax/ben-glowacki.git",
-  "_target": "form-refactor",
-  "_originalSource": "clubajax/ben-glowacki"
+  ]
 }
