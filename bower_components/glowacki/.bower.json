@@ -15,13 +15,13 @@
     "test",
     "tests"
   ],
-  "_release": "4e9828fe79",
+  "_release": "e48033ec3c",
   "_resolution": {
     "type": "branch",
-    "branch": "form-refactor",
-    "commit": "4e9828fe79261abff76369a69f5a87cc9de23ba1"
+    "branch": "master",
+    "commit": "e48033ec3c184f84b01a0feeb1ba1c2dba05e3dd"
   },
   "_source": "https://github.com/clubajax/ben-glowacki.git",
-  "_target": "form-refactor",
+  "_target": "*",
   "_originalSource": "clubajax/ben-glowacki"
 }
