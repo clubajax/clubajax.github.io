@@ -98,7 +98,7 @@
 	<section class="">
 		<article>
 			<!-- action="cgi-bin/contact.cgi" -->
-			<form id="contact-form" name="frmContact" method="get">
+			<form id="contact-form" name="frmContact" method="POST" action="cgi-bin/contact.cgi">
 				<fieldset class="contact-form">
 					<label>
 						<span>Name*</span>
@@ -142,12 +142,12 @@
 					<label class="select-wrapper icon-drop">
 						<span>Presentation You are Interested in</span>
 						<select aria-labelledby="presentation" name="presentation">
-									<option value="1">Choose a Presentation</option>
-									<option value="2">Diversity According to Family Guy and South Park</option>
-									<option value="3">Happy Hour 24/7</option>
-									<option value="4">Walking is Over-Rated!</option>
-									<option value="5">Aren't We All Just A Little Bit Prejudiced?</option>
-									<option value="6">Nurture Your Nature</option>
+									<option value="None">Choose a Presentation</option>
+									<option value="Diversity According to Family Guy and South Park">Diversity According to Family Guy and South Park</option>
+									<option value="Happy Hour 24/7">Happy Hour 24/7</option>
+									<option value="Walking is Over-Rated!">Walking is Over-Rated!</option>
+									<option value="Aren't We All Just A Little Bit Prejudiced?">Aren't We All Just A Little Bit Prejudiced?</option>
+									<option value="Nurture Your Nature">Nurture Your Nature</option>
 								</select>
 					</label>
 
@@ -174,7 +174,7 @@
 						<input aria-labelledby="budget" name="budget" type="text" value="">
 					</label>
 					<label class="checkbox">
-						<input aria-labelledby="request_kit" type="checkbox" name="request_kit" role="checkbox" aria-checked="false" value="" />
+						<input aria-labelledby="request_kit" type="checkbox" name="request_kit" role="checkbox" aria-checked="false" value="Y" />
 						<ins></ins>
 						<span>Request a Doing Happiness First Aid Kit</span>
                </label>
@@ -202,7 +202,7 @@
 	<right-column></right-column>
 	<footer>
 	<span class="disclaimer">
-      <div role="copywrite">All Content TM & © Matt Glowacki. All rights reserved.</div><br>
+      <div role="copyright">All Content TM & © Matt Glowacki. All rights reserved.</div><br>
 		<div role="contentcreator">This site crafted by <a href="http://mediamavenscg.com/cgi-bin/redir.cgi?page=index.htm&mattglowacki" target="_blank">Media Mavens CG</a>.</div></span>
 	</footer>
 </contact>

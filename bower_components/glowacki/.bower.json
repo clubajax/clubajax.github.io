@@ -15,11 +15,11 @@
     "test",
     "tests"
   ],
-  "_release": "e48033ec3c",
+  "_release": "d67f6a0489",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "e48033ec3c184f84b01a0feeb1ba1c2dba05e3dd"
+    "commit": "d67f6a0489fa067112c3023e897ebc0952833141"
   },
   "_source": "https://github.com/clubajax/ben-glowacki.git",
   "_target": "*",

@@ -73,7 +73,7 @@
 		<div id="mask" onclick="document.location='#';"></div>
 	</header>
 
-	<div id="top-bar"><a href="contact.html"><span class="cta-presentation">Arrange a Presentation</span> <span class="page-header">Civility Speaker</span></a></div>
+	<div id="top-bar"><a href="contact-arrange.html"><span class="cta-presentation">Arrange a Presentation</span> <span class="page-header">Civility Speaker</span></a></div>
 	<div id="readout" hidden="1"></div>
 
 	<left-column></left-column>
@@ -127,51 +127,48 @@
 		</div>
 		<hr/>
 		<span class="disclaimer">
-      <div role="copywrite">All Content TM & © Matt Glowacki. All rights reserved.</div><br>
+      <div role="copyright">All Content TM & © Matt Glowacki. All rights reserved.</div><br>
 		<div role="contentcreator">This site crafted by <a href="http://mediamavenscg.com/cgi-bin/redir.cgi?page=index.htm&mattglowacki" target="_blank">Media Mavens CG</a>.</div></span>
 	</footer>
 	<about>
 </body>
 <script>
-    var h = document.getElementById("main-header");
-    var n = document.getElementById("nav-content");
-    var t = document.getElementById("top-bar");
-    var c = document.getElementById("content");
-    var readout = document.getElementById("readout");
-    var stuck = false;
-    var stickPoint = getDistance();
-    
-    function getDistance() {
-      var topDist = h.offsetTop;
-      return topDist;
-    }
-    
-    window.onscroll = function(e) {
-      var distance = getDistance() - window.pageYOffset;
-      var offset = window.pageYOffset;
-      readout.innerHTML = stickPoint + '   ' + distance + '   ' + offset + '   ' + stuck;
-      if ( (distance <= 0) && !stuck) {
-        h.style.position = 'fixed';
-        h.style.top = '0px';
-        t.style.position = 'fixed';
-        t.style.margin = "80px 0 0 0 "
-      t.style.zIndex = '2';
-      n.style.zIndex = '1110';
-        /*n.style.margin = "84px 0 0 0 "*/
-        
-      c.style.padding = "10px 0 0 0 "
-        stuck = true;
-      } else if (stuck && (offset <= stickPoint)){
-        h.style.position = 'static';
-        t.style.position = 'static';
-      t.style.margin = "0 0 0 0 "
-       t.style.zIndex = '2';
-        n.style.zIndex = '1110';
-        n.style.margin = "0 0 0 0 "
-      c.style.padding = "0 0 0 0 "
-        stuck = false;
-      }
-    }
-      
-  </script>
+var h = document.getElementById("main-header");
+var n = document.getElementById("nav-content");
+var t = document.getElementById("top-bar");
+
+var readout = document.getElementById("readout");
+var stuck = false;
+var stickPoint = getDistance();
+
+function getDistance() {
+  var topDist = h.offsetTop;
+  return topDist;
+}
+
+window.onscroll = function(e) {
+  var distance = getDistance() - window.pageYOffset;
+  var offset = window.pageYOffset;
+  readout.innerHTML = stickPoint + '   ' + distance + '   ' + offset + '   ' + stuck;
+  if ( (distance <= 0) && !stuck) {
+    h.style.position = 'fixed';
+    h.style.top = '0px';
+    t.style.position = 'fixed';
+    t.style.margin = "80px 0 0 0 "
+	t.style.zIndex = '2';
+	n.style.zIndex = '1110';
+	  /*n.style.margin = "84px 0 0 0 "*/
+
+    stuck = true;
+  } else if (stuck && (offset <= stickPoint)){
+    h.style.position = 'static';
+    t.style.position = 'static';
+	t.style.margin = "0 0 0 0 "
+	 t.style.zIndex = '2';
+	  n.style.zIndex = '1110';
+	  n.style.margin = "0 0 0 0 "
+    stuck = false;
+  }
+}
+	</script>
 </html>

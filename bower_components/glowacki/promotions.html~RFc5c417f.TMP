@@ -8,11 +8,6 @@
 <link href="css/v1.0.css" rel="stylesheet" type="text/css">
 <link href="css/nav.css" rel="stylesheet" type="text/css">
 </head>
-<style>
-	.active a:link, .active {
-			text-decoration: underline;
-		}
-	</style>
 
 <body>
 <promotional>
@@ -93,7 +88,7 @@
             <img src="img/poster_blue.jpg">
         </div>
         <main class="promo-card__description">
-            Blue  - Matt's mountaintop handstand time & date poster.
+            Blue promo poster of Matt doing handstand on a mountain.
         </main>
         <a href="xtras/poster_blue.zip" class="promo-button">Download</a>
 
@@ -105,7 +100,7 @@
             <img src="img/poster_purple.jpg">
         </div>
         <main class="promo-card__description">
-            Purple  - Matt's mountaintop handstand time & date poster.
+            Purple promo poster of Matt doing handstand on a mountain.
         </main>
         <a href="xtras/poster_purple.zip" class="promo-button">Download</a>
 
@@ -118,7 +113,7 @@
             <img src="img/poster_red.jpg">
         </div>
         <main class="promo-card__description">
-            Red  - Matt's mountaintop handstand time & date poster.
+            Red promo poster of Matt doing handstand on a mountain.
         </main>
         <a href="xtras/poster_red.zip" class="promo-button">Download</a>
 
@@ -131,25 +126,63 @@
             <img src="img/fullcolorpromo.jpg">
         </div>
         <main class="promo-card__description">
-          Diversity According to Family Guy & South Park time & date poster.
+          Diversity According to Family Guy and South Park time and date poster.
         </main>
         <a href="xtras/fullcolorpromo.zip" class="promo-button">Download</a>
 
     </div>
+
 		<div class="promo-card">
         <header class="promo-card__title">
-            <p>Gray Promo</p>
+            <p>Doing Happiness Handout</p>
         </header>
         <div class="promo-card__thumbnail">
-            <img src="img/promogreyscale.jpg">
+            <img src="img/happy_handout_324w-250h.jpg">
         </div>
         <main class="promo-card__description">
-          Diversity According to Family Guy & South Park time & date poster.
+            A handout to help boost your mood and creativity.
         </main>
-        <a href="xtras/promogreyscale.zip" class="promo-button">Download</a>
+        <a href="xtras/happy_handout_300dpi.zip" class="promo-button">Download</a>
+
+    </div><div class="promo-card">
+        <header class="promo-card__title">
+            <p>Purple Promo Poster</p>
+        </header>
+        <div class="promo-card__thumbnail">
+            <img src="img/poster_purple.jpg">
+        </div>
+        <main class="promo-card__description">
+            Purple promo poster of Matt doing handstand on a mountain.
+        </main>
+        <a href="xtras/poster_purple.zip" class="promo-button">Download</a>
 
     </div>
+    <div class="promo-card">
+        <header class="promo-card__title">
+            <p>Red Promo Poster</p>
+        </header>
+        <div class="promo-card__thumbnail">
+            <img src="img/poster_red.jpg">
+        </div>
+        <main class="promo-card__description">
+            Red promo poster of Matt doing handstand on a mountain.
+        </main>
+        <a href="xtras/poster_red.zip" class="promo-button">Download</a>
 
+    </div>
+    <div class="promo-card">
+        <header class="promo-card__title">
+            <p>Full Color Promo</p>
+        </header>
+        <div class="promo-card__thumbnail">
+            <img src="img/fullcolorpromo.jpg">
+        </div>
+        <main class="promo-card__description">
+          Diversity According to Family Guy and South Park time and date poster.
+        </main>
+        <a href="xtras/fullcolorpromo.zip" class="promo-button">Download</a>
+
+    </div>
 
 </section>
 		</div>
@@ -157,60 +190,60 @@
 
 	</article>
 	<article>
-	<div class="speaking-header-wrapper"> <div for="program_title" class="speaking-header"><span class="">Doing Happiness Promo & Posters</span></div></div>
+	<div class="speaking-header-wrapper"> <div for="program_title" class="speaking-header"><span class="">Promotional Posters</span></div></div>
 			<div class="first-column">
 			<section class="promo-card-container">
-				<div class="promo-card">
-		        <header class="promo-card__title">
-		            <p>Doing Happiness Handout</p>
-		        </header>
-		        <div class="promo-card__thumbnail">
-		            <img src="img/happy_handout_324w-250h.jpg">
-		        </div>
-		        <main class="promo-card__description">
-		            A handout to help boost your mood and your creativity.
-		        </main>
-		        <a href="xtras/happy_handout_300dpi.zip" class="promo-button">Download</a>
+	    <div class="promo-card">
+	        <header class="promo-card__title">
+	            <p>Blue Promo Poster</p>
+	        </header>
+	        <div class="promo-card__thumbnail">
+	            <img src="img/poster_blue.jpg">
+	        </div>
+	        <main class="promo-card__description">
+	            Blue promo poster of Matt doing handstand on a mountain.
+	        </main>
+	        <a href="xtras/poster_blue.zip" class="promo-button">Download</a>
 
-		    </div>
-				<div class="promo-card">
-		        <header class="promo-card__title">
-		            <p>Bring Your Own Bubbles Poster</p>
-		        </header>
-		        <div class="promo-card__thumbnail">
-		            <img src="img/bringyourownbubbles_333w-250h.jpg">
-		        </div>
-		        <main class="promo-card__description">
-		            Doing Happiness "Bring Your Own Bubbles" time & date poster.
-		        </main>
-		        <a href="xtras/poster_purple.zip" class="promo-button">Download</a>
-		    </div>
-		    <div class="promo-card">
-		        <header class="promo-card__title">
-		            <p>Bee Happy Poster</p>
-		        </header>
-		        <div class="promo-card__thumbnail">
-		            <img src="img/happy_matt_332w-250h.jpg">
-		        </div>
-		        <main class="promo-card__description">
-		             Doing Happiness "Bee Happy" time & date poster.
-		        </main>
-		        <a href="xtras/happy_matt_300dpi.zip" class="promo-button">Download</a>
+	    </div><div class="promo-card">
+	        <header class="promo-card__title">
+	            <p>Purple Promo Poster</p>
+	        </header>
+	        <div class="promo-card__thumbnail">
+	            <img src="img/poster_purple.jpg">
+	        </div>
+	        <main class="promo-card__description">
+	            Purple promo poster of Matt doing handstand on a mountain.
+	        </main>
+	        <a href="xtras/poster_purple.zip" class="promo-button">Download</a>
 
-		    </div>
-		    <div class="promo-card">
-		        <header class="promo-card__title">
-		            <p>Happiness Happens</p>
-		        </header>
-		        <div class="promo-card__thumbnail">
-		            <img src="img/happy_happiness_happens_351w-250h.jpg">
-		        </div>
-		        <main class="promo-card__description">
-		          Doing Happiness "Happiness Happens" time & date poster.
-		        </main>
-		        <a href="xtras/fullcolorpromo.zip" class="promo-button">Download</a>
+	    </div>
+	    <div class="promo-card">
+	        <header class="promo-card__title">
+	            <p>Red Promo Poster</p>
+	        </header>
+	        <div class="promo-card__thumbnail">
+	            <img src="img/poster_red.jpg">
+	        </div>
+	        <main class="promo-card__description">
+	            Red promo poster of Matt doing handstand on a mountain.
+	        </main>
+	        <a href="xtras/poster_red.zip" class="promo-button">Download</a>
 
-		    </div>
+	    </div>
+	    <div class="promo-card">
+	        <header class="promo-card__title">
+	            <p>Full Color Promo</p>
+	        </header>
+	        <div class="promo-card__thumbnail">
+	            <img src="img/fullcolorpromo.jpg">
+	        </div>
+	        <main class="promo-card__description">
+	          Diversity According to Family Guy and South Park time and date poster.
+	        </main>
+	        <a href="xtras/fullcolorpromo.zip" class="promo-button">Download</a>
+
+	    </div>
 
 	</section>
 			</div>
@@ -249,7 +282,7 @@
 	</div>
 	</hr>
 	<span class="disclaimer">
-      <div role="copyright">All Content TM & © Matt Glowacki. All rights reserved.</div><br>
+      <div role="copywrite">All Content TM & © Matt Glowacki. All rights reserved.</div><br>
 		<div role="contentcreator">This site crafted by <a href="http://mediamavenscg.com/cgi-bin/redir.cgi?page=index.htm&mattglowacki" target="_blank">Media Mavens CG</a>.</div></span>
     </footer>
 </promotional>
