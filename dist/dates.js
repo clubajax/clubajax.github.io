@@ -22,7 +22,7 @@
 		tsRegExp = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\b/,
 
 		// 12:30 am
-		timeRegExp = /(\d\d):(\d\d)(?:\s|:)(\d\d|[ap]m)(?:\s)*([ap]m)*/i,
+		timeRegExp = /(\d+):(\d\d)(?:\s|:)(\d\d|[ap]m)(?:\s)*([ap]m)*/i,
 
 		daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 		days = [],
@@ -151,7 +151,7 @@
 		let ms;
 		if (typeof date === 'object' && date instanceof Date) {
 			ms = date.getTime();
-			return !isNaN(ms) && ms > 0;
+			return !isNaN(ms);
 		}
 		return false;
 	}
@@ -195,7 +195,7 @@
 			day = +parts[3];
 			year = +parts[5];
 			// rough check of a year
-			if (0 < year && year < 2100 && 1 <= month && month <= 12 && 1 <= day &&
+			if (year > 1900 && year < 2100 && 1 <= month && month <= 12 && 1 <= day &&
 				day <= (month === 2 && isLeapYear(year) ? 29 : monthLengths[month - 1])) {
 				return true;
 			}
@@ -219,7 +219,31 @@
 		return false;
 	}
 
+	function padded (value) {
+		const time = timeRegExp.exec(value);
+		const date = dateRegExp.exec(value);
+		let str = '';
+		if (date) {
+			str += pad(date[1]) + date[2] + pad(date[3]) + date[4] + date[5];
+		}
+		if (date && time) {
+			str += ' ';
+		}
+		if (time) {
+			if (time[4]) {
+				str += pad(time[1]) + ':' + time[2] + ':' + time[3] + ' ' + time[4];
+			} else {
+				str += pad(time[1]) + ':' + time[2] + ' ' + time[3];
+			}
+
+		}
+		return str;
+	}
+
 	function pad (num) {
+		if (typeof num === 'string') {
+			return num.length === 1 ? '0' + num : num;
+		}
 		return (num < 10 ? '0' : '') + num;
 	}
 
@@ -264,11 +288,13 @@
 		}
 		let date = new Date(-1);
 
-		// 11/20/2000
+
 		let parts = dateRegExp.exec(value);
-		console.log('parts', parts, value);
-		if (parts && parts[2] === parts[4]) {
-			console.log('WAT');
+		if (parts && parts[1].length === 4) {
+			// 2000-02-20
+			date = new Date(+parts[1], +parts[3] - 1, +parts[5]);
+		} else if (parts && parts[2] === parts[4]) {
+			// 11/20/2000
 			date = new Date(+parts[5], +parts[1] - 1, +parts[3]);
 		}
 
@@ -303,7 +329,7 @@
 	}
 
 	function formatDatePattern (date, pattern) {
-		// 'MMM d, yyyy' Dec 5, 2015
+		// 'M d, yyyy' Dec 5, 2015
 		// 'MM dd yy' December 05 15
 		// 'm-d-yy' 1-1-15
 		// 'mm-dd-yyyy' 01-01-2015
@@ -427,6 +453,28 @@
 		return false;
 	}
 
+	function max (d1, d2) {
+		const args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
+		let maxDate = new Date(1901, 1, 1);
+		for (let i = 0; i < args.length; i++) {
+			if (isGreater(args[i], maxDate)) {
+				maxDate = args[i];
+			}
+		}
+		return maxDate;
+	}
+
+	function min () {
+		const args = Array.isArray(arguments[0]) ? arguments[0] : arguments;
+		let minDate = new Date(2099, 0, 1);
+		for (let i = 0; i < args.length; i++) {
+			if (isLess(args[i], minDate)) {
+				minDate = args[i];
+			}
+		}
+		return minDate;
+	}
+
 	function diff (date1, date2) {
 		// return the difference between 2 dates in days
 		const
@@ -476,9 +524,17 @@
 		return date;
 	}
 
-	function toTimestamp (date) {
+	function minutesToTime (mins) {
+		const sign = mins > 0 ? '-' : '+';
+		const h = Math.floor(mins / 60);
+		const m = ((mins / 60) - h) * 60;
+		return sign + pad(h) + ':' + pad(m);
+	}
+
+	function toTimestamp (date, offset) {
+		const tz = !offset ? '' : minutesToTime(date.getTimezoneOffset());
 		return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + 'T' +
-			pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds());
+			pad(date.getHours()) + ':' + pad(date.getMinutes()) + ':' + pad(date.getSeconds()) + tz;
 	}
 
 	function fromTimestamp (str) {
@@ -518,42 +574,42 @@
 
 	function is (d1) {
 		return {
-			less (d2) {
+			less: function (d2) {
 				return isLess(d1, d2);
 			},
-			greater (d2) {
+			greater: function (d2) {
 				return isGreater(d1, d2);
 			},
-			valid () {
+			valid: function () {
 				return isDate(d1);
 			},
-			timestamp () {
+			timestamp: function () {
 				return isTimestamp(d1);
 			},
-			equal(d2) {
+			equal: function (d2) {
 				return toDate(d1).getTime() === toDate(d2).getTime();
 			},
-			equalDate (d2) {
+			equalDate: function (d2) {
 				return d1.getFullYear() === d2.getFullYear() &&
 					d1.getMonth() === d2.getMonth() &&
 					d1.getDate() === d2.getDate();
 			},
-			equalTime (d2) {
+			equalTime: function (d2) {
 				return d1.getHours() === d2.getHours() &&
 					d1.getMinutes() && d2.getMinutes() &&
 					d1.getSeconds() === d2.getSeconds();
 			},
-			time () {
+			time: function () {
 				if (typeof d1 !== 'string') {
 					throw new Error('value should be a string');
 				}
 				return timeRegExp.test(d1);
 			},
-			date () {
+			date: function () {
 				if (typeof d1 !== 'string') {
 					throw new Error('value should be a string');
 				}
-				return dateRegExp.test(d1);
+				return isDate(d1);
 			}
 		}
 	}
@@ -579,6 +635,8 @@
 		subtractDate: subtractDate,
 		isLess: isLess,
 		isGreater: isGreater,
+		min: min,
+		max: max,
 		// special types
 		isLeapYear: isLeapYear,
 		getMonthIndex: getMonthIndex,
@@ -596,6 +654,7 @@
 		clone: copy,
 		length: length,
 		pad: pad,
+		padded: padded,
 		// lists
 		months: {
 			full: months,

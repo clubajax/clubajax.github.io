@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Club AJAX CAL2 API Test</title>
+	<link href="style/style.css" rel="stylesheet" />
+	<script src="./dist/dom.js"></script>
+	<script src="./dist/dates.js"></script>
+	<style>
+		body{
+			font-family: sans-serif;
+			font-size: 14px;
+		}
+		.calendar{
+			width: 300px;
+		}
+		.tag-0{
+			background-color: #eee;
+			color: black;
+		}
+		.tag-2{
+			background-color: #bd8c0e;
+			color: white;
+		}
+		.tag-7{
+			background-color: #0968d2;
+			color: white;
+		}
+		.tag-5{
+			background-color: #02a127;
+			color: white;
+		}
+		.month{
+			font-size: 18px;
+			font-weight: bold;
+			margin: 20px 0 10px 0;
+			border-bottom: 1px solid #ccc;
+		}
+		h3{
+			font-size: 16px;
+			padding: 5px;
+			margin-bottom: 10px;
+		}
+		.times{
+			margin-bottom: 10px;
+		}
+		.location{
+			font-size: 12px;
+			font-style: italic;
+			color: #999;
+		}
+	</style>
+	<script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+<h1>Club AJAX CAL2 API Test</h1>
+
+<script>
+	function start() {
+		// Authorization scopes required by the API; multiple scopes can be
+		// included, separated by spaces.
+		const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+
+		// Initializes the client with the API key and the Translate API.
+		gapi.client.init({
+			'apiKey': 'AIzaSyB5NWp-M23VUNxPW649KWpaPdDvOiQcMEU',
+			'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+			scope: SCOPES,
+		}).then(function() {
+
+			gapi.client.calendar.events.list({
+				'calendarId': 'primary',
+				'timeMin': (new Date()).toISOString(),
+				'showDeleted': false,
+				'singleEvents': true,
+				'maxResults': 10,
+				'orderBy': 'startTime',
+				sanitizeHtml: true
+			}).then(function(response) {
+				console.log('CAL', response);
+			});
+
+		});
+	}
+
+	// Loads the JavaScript client library and invokes `start` afterwards.
+	gapi.load('client', start);
+
+	const url = 'https://clients6.google.com/calendar/v3/calendars/anm9tr@gmail.com/events?calendarId=anm9tr%40gmail.com&singleEvents=true&timeZone=America%2FChicago&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2018-08-26T00%3A00%3A00-05%3A00&timeMax=2018-10-07T00%3A00%3A00-05%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs';
+
+	fetch(url).then((e) => {
+		console.log('e', e);
+		console.log(e.json());
+	})
+</script>
+<div id="results"></div>
+
+</body>
+</html>

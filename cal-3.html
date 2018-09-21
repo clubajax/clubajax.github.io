@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Club AJAX CAL2 API Test</title>
+	<link href="style/style.css" rel="stylesheet" />
+	<script src="./dist/dom.js"></script>
+	<script src="./dist/dates.js"></script>
+	<style>
+		body{
+			font-family: sans-serif;
+			font-size: 14px;
+			background-color: #000;
+		}
+		h1, h2{
+			color: #eee;
+		}
+		a{
+			color: #efefef;
+		}
+		div.calendar{
+			width: 300px;
+		}
+		.calendar td{
+			width: 260px;
+			vertical-align: top;
+			text-align: center;
+		}
+		.tag-0{
+			background-color: #eee;
+			color: black;
+		}
+		.tag-2{
+			background-color: #bd8c0e;
+			color: white;
+		}
+		.tag-test{
+			/*color: #0968d2;*/
+		}
+		.tag-camp{
+			color: #00FF00;
+		}
+		.month{
+			font-size: 18px;
+			font-weight: bold;
+			margin: 20px 0 10px 0;
+			color: #ff0000;
+		}
+		h3{
+			font-size: 16px;
+			padding: 5px;
+			margin-bottom: 0;
+		}
+		.times{
+			margin-bottom: 10px;
+		}
+		.location{
+			font-size: 12px;
+			font-style: italic;
+			color: #999;
+		}
+		.blue-header{
+			background-color: rgb(102, 204, 255);
+			color: black;
+			font-weight: bold;
+			text-align: center;
+			padding: 10px;
+		}
+		.red-header{
+			background-color: rgb(204, 0, 0);
+			color: white;
+			font-weight: bold;
+			text-align: center;
+			padding: 10px;
+		}
+		.cal-content td{
+			background-color: #000;
+			color: #eee;
+		}
+		.cal-content td[semester]{
+			background-color: #333;
+		}
+		.tag-semester{
+			color: rgb(102, 204, 255);
+		}
+		.pin{
+			position: relative;
+			right: 15px;
+			display: inline-block;
+			background-color: #b73829;
+			border-radius: 50% 50% 50% 0;
+			width: 14px;
+			height: 14px;
+			transform: rotate(-45deg);
+		}
+		.pin::after{
+			content: '';
+			width: 50%;
+			height: 50%;
+			position: absolute;
+			background-color: black;
+			border-radius: 50%;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	</style>
+
+</head>
+<body>
+<h1>Club AJAX CAL3 API Test</h1>
+<div class="calendar">
+	<h2>Upcoming Events</h2>
+	<div id="events"></div>
+</div>
+<table class="calendar">
+	<tr>
+		<td><div class="blue-header">Semester Dates & Holidays</div></td>
+		<td colspan="2"><div class="red-header">What's Next</div></td>
+	</tr>
+	<tr class="cal-content">
+		<td semester>
+			<p>8 weeks for $60 at most locations. Simply register in class within the first two weeks of the semester.</p>
+		</td>
+		<td start-date="08/01/2018" end-date="12/31/2018"></td>
+		<td start-date="01/01/2019" end-date="05/30/2019"></td>
+	</tr>
+</table>
+
+<script src="./dist/cal.js"></script>
+</body>
+</html>
