@@ -1,7 +1,17 @@
 const dom = window.dom;
 const dates = window.dates;
-const linkToPublicCalendar = '957ttrgqkedrv1iplduhcodi8o@group.calendar.google.com'; //'anm9tr@gmail.com';
+const linkToPublicCalendar = 'media.redtigerkarate@gmail.com';
 const apiKey = 'AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs';
+
+// Mike public Karate Calendar:
+// https://calendar.google.com/calendar/embed?src=957ttrgqkedrv1iplduhcodi8o%40group.calendar.google.com&ctz=America%2FChicago
+// id: 957ttrgqkedrv1iplduhcodi8o@group.calendar.google.com
+
+// Media RTK Calendar:
+// https://calendar.google.com/calendar/embed?src=media.redtigerkarate%40gmail.com&ctz=America%2FChicago
+// https://calendar.google.com/calendar/b/1?cid=bWVkaWEucmVkdGlnZXJrYXJhdGVAZ21haWwuY29t
+// id: media.redtigerkarate%40gmail.com
+// bWVkaWEucmVkdGlnZXJrYXJhdGVAZ21haWwuY29t@group.calendar.google.com
 
 function fetchCalendar (timeMin, timeMax, callback) {
 
@@ -84,7 +94,6 @@ let currentMonth;
 function createEvent (event, parent, updateMonths) {
 	// parse
 	const type = event.type;
-	console.log('t', type);
 	const allDay = !!event.start.date;
 	const start = dates.toDate(event.start.dateTime || event.start.date);
 	const end = dates.toDate(event.end.dateTime || event.end.date);
@@ -112,7 +121,7 @@ function createEvent (event, parent, updateMonths) {
 
 const util = {
 	updateEvent: function (event) {
-		event.type = util.getType(event.description);
+		event.type = util.getType(event.summary);
 		event.description = event.description ? event.description.replace(/{{\w*}}/, '') : null;
 	},
 	inRange: function (eventDate, beg, end) {
@@ -123,11 +132,8 @@ const util = {
 		if (!txt) {
 			return null;
 		}
-		// extract tags
-		// txt = txt.replace(/{{\w*}}/, '');
 		return dom('div', { class: 'description', html: txt });
 	},
-
 	getLocation: function (txt) {
 		if (!txt) {
 			return null;
@@ -139,11 +145,10 @@ const util = {
 			]
 		});
 	},
-
-	getType: function (desc) {
-		const r = /{{(\w*)}}/;
-		const match = r.exec(desc);
-		return match ? 'tag-' + match[1].toLowerCase() : '';
+	getType: function (str) {
+		const reg = /Semester|Test|Camp|Tournament|Championship/i;
+		const match = reg.exec(str);
+		return match ? 'tag-' + match[0].toLowerCase() : 'tag-notice';
 	},
 
 	getDates: function (start, end) {
