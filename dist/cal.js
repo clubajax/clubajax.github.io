@@ -1,6 +1,6 @@
 const dom = window.dom;
 const dates = window.dates;
-const linkToPublicCalendar = 'media.redtigerkarate@gmail.com';
+const linkToPublicCalendar = '957ttrgqkedrv1iplduhcodi8o@group.calendar.google.com';
 const apiKey = 'AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs';
 
 // Mike public Karate Calendar:
@@ -10,8 +10,10 @@ const apiKey = 'AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs';
 // Media RTK Calendar:
 // https://calendar.google.com/calendar/embed?src=media.redtigerkarate%40gmail.com&ctz=America%2FChicago
 // https://calendar.google.com/calendar/b/1?cid=bWVkaWEucmVkdGlnZXJrYXJhdGVAZ21haWwuY29t
-// id: media.redtigerkarate%40gmail.com
-// bWVkaWEucmVkdGlnZXJrYXJhdGVAZ21haWwuY29t@group.calendar.google.com
+// id: media.redtigerkarate@gmail.com
+
+
+// TODO: add bug-fix-allday
 
 function fetchCalendar (timeMin, timeMax, callback) {
 
@@ -106,7 +108,7 @@ function createEvent (event, parent, updateMonths) {
 
 	// console.log('start', start);
 	// console.log('end', end);
-	// console.log(event.summary, ' - ', type);
+	console.log(event.summary, ' - ', type, end.getDate() - start.getDate());
 	dom('div', {
 		class: 'event',
 		html: [
