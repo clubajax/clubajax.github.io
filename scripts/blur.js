@@ -1,0 +1,1 @@
+javascript: void ((function () { const blur = window._blurSetting ? window._blurSetting + 1 : 1; window._blurSetting = blur; document.body.style.filter = `blur(${blur}px)` })());

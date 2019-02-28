@@ -71,8 +71,41 @@
     *::before {
         box-sizing: inherit;
     }
-    section{
+    section,
+    .page, 
+    .wrap, 
+    .label-wrapper{
         margin-bottom: 20px;
+    }
+    article{
+        display: flex;
+    }
+    nav ul{
+        list-style: none;
+        padding: 0;
+    }
+    nav ul li{
+        display: inline-block;
+    }
+    nav ul li a{
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #333;
+        padding: 10px;
+        background-color: white;
+        margin-right: 5px;
+    }
+    nav ul li a:hover{
+        background-color: #eee;
+    }
+    main{
+        flex: 1;
+        padding: 0 10px;
+    }
+    aside{
+        flex: 0 0 150px;
+        border-left: 1px solid #999;
+        padding: 10px;
     }
     .styled-item div:nth-child(1){
         font-size: 18px;
@@ -133,6 +166,18 @@
         border: 1px solid #999;
         background-color: white;
         margin-top: 5px;
+    }
+    h1{
+        padding: 0;
+        margin: 0;
+        outline: 0;
+    }
+    h1 a, h1 span{
+        display: inline-block;
+        vertical-align: top;
+    }
+    h1 span{
+        margin-top: 4px;
     }</style></head><body><div class="sb-nopreview sb-wrapper"><div class="sb-nopreview_main"><h1 class="sb-nopreview_heading sb-heading">No Preview</h1><p>Sorry, but you either have no stories or none are selected somehow.</p><ul><li>Please check the storybook config.</li><li>Try reloading the page.</li></ul></div></div><div class="sb-errordisplay sb-wrapper"><div id="error-message" class="sb-heading"></div><pre class="sb-errordisplay_code">
     <code id="error-stack"></code>
-  </pre></div><div id="root"></div><script src="runtime~main.c22859025b027656ca9e.bundle.js"></script><script src="vendors~main.c22859025b027656ca9e.bundle.js"></script><script src="main.c22859025b027656ca9e.bundle.js"></script></body></html>
+  </pre></div><div id="root"></div><script src="runtime~main.2bf372ede046ec9fc893.bundle.js"></script><script src="vendors~main.2bf372ede046ec9fc893.bundle.js"></script><script src="main.2bf372ede046ec9fc893.bundle.js"></script></body></html>
