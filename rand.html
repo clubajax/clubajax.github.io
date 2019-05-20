@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Club AJAX Random Data Generator</title>
+    <script src="./dist/mouse.js"></script>
+    <link href="./style/style.css" rel="stylesheet" />
+    <script src="./dist/on.js"></script>
+    <script src="./dist/dom.js"></script>
+    <script src="./dist/rand.js"></script>
+    <style>
+        .output{
+            margin-top: 20px;
+        }
+        textarea{
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Club AJAX Random Data Generator</h1>
+    <div class="fields">
+        <div class="field">
+            <input id="first-name" type="checkbox" />
+            <label for="first-name">First Name</label>
+        </div>
+        <div class="field">
+            <input id="last-name" type="checkbox" />
+            <label for="last-name">Last Name</label>
+        </div>
+        <div class="field">
+            <input id="company" type="checkbox" />
+            <label for="company">Company</label>
+        </div>
+        <div class="field">
+            <input id="address" type="checkbox" />
+            <label for="address">Address</label>
+        </div>
+        <div class="field">
+            <input id="city" type="checkbox" />
+            <label for="city">City</label>
+        </div>
+        <div class="field">
+            <input id="state" type="checkbox" />
+            <label for="state">State</label>
+        </div>
+        <div class="field">
+            <input id="zip" type="checkbox" />
+            <label for="zip">Zipcode</label>
+        </div>
+        <div class="field">
+            <input id="phone" type="checkbox" />
+            <label for="phone">Phone</label>
+        </div>
+        <div class="field">
+            <input id="email" type="checkbox" />
+            <label for="email">Email</label>
+        </div>
+        <div class="field">
+            <input id="website" type="checkbox" />
+            <label for="website">Website</label>
+        </div>
+        <div class="field">
+            <input id="ssn" type="checkbox" />
+            <label for="ssn">Social Security Number</label>
+        </div>
+        <div class="field">
+            <input id="age" type="checkbox" />
+            <label for="age">Age</label>
+        </div>
+        <div class="field">
+            <input id="dob" type="checkbox" />
+            <label for="dob">Date of Birth</label>
+        </div>
+    </div>
+    <div class="fields">
+        <div class="field">
+            <input id="all" type="checkbox" />
+            <label for="all">All</label>
+        </div>
+        <div class="field">
+            <label for="amount">Amount:</label>
+            <input id="amount" type="number" value="3"/>
+        </div>
+        <button id="gen">Generate</button>
+    </div>
+
+    <div class="output">
+        <label>Output</label>
+        <textarea id="ta"></textarea>
+    </div>
+
+    <script>
+        function get (id) {
+            return dom.byId(id);
+        }
+
+        function generate () {
+            const items = [];
+            const amount = get('amount').value || 5;
+            for (let i = 0; i < amount; i++) {
+                const item = {};
+                const st = rand.cityState();
+                const site = rand.site();
+                if (get('first-name').checked) {
+                    item.firstName = rand.name();
+                }
+                if (get('last-name').checked) {
+                    item.lastName = rand.name();
+                }
+                if (get('company').checked) {
+                    item.company = site;
+                }
+                if (get('address').checked) {
+                    item.address = rand.bignumber(rand.range(3, 5)) + ' ' + rand.street();
+                }
+                if (get('city').checked) {
+                    item.city = st.split(', ')[ 0 ];
+                }
+                if (get('state').checked) {
+                    item.state = st.split(', ')[ 1 ];
+                }
+                if (get('zip').checked) {
+                    item.zipcode = rand.bignumber(5);
+                }
+                if (get('phone').checked) {
+                    item.phone = rand.bignumber(10);
+                }
+                if (get('ssn').checked) {
+                    item.ssn = rand.bignumber(9);
+                }
+                if (get('age').checked) {
+                    item.age = rand.range(18, 65);
+                }
+                if (get('dob').checked) {
+                    item.dob = rand.date({ delimiter: '/' });
+                }
+                if (get('website').checked) {
+                    item.website = 'http://' + site.toLowerCase() + '.com';
+                }
+                if (get('email').checked) {
+                    item.email =  ((item.firstName || rand.word()).substring(0, 1) + (item.lastName || rand.word()) + '@' + site + '.com').toLowerCase();
+                }
+
+                items.push(item);
+            }
+
+            get('ta').value = JSON.stringify(items, null, 4);
+        }
+        on('gen', 'click', generate);
+        on('all', 'change', function () {
+            const checked = get('all').checked;
+            document.querySelectorAll('input[type="checkbox"]').forEach(function(input){
+                input.checked = checked;
+            });
+        });
+    </script>
+</body>
