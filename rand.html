@@ -20,6 +20,10 @@
     <h1>Club AJAX Random Data Generator</h1>
     <div class="fields">
         <div class="field">
+            <input id="id" type="checkbox" />
+            <label for="id">ID</label>
+        </div>
+        <div class="field">
             <input id="first-name" type="checkbox" />
             <label for="first-name">First Name</label>
         </div>
@@ -101,6 +105,9 @@
                 const item = {};
                 const st = rand.cityState();
                 const site = rand.site();
+                if (get('id').checked) {
+                    item.id = i + 1;
+                }
                 if (get('first-name').checked) {
                     item.firstName = rand.name();
                 }
